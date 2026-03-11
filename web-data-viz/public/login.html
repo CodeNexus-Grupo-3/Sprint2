@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>Login | CodeNexus</title>
+</head>
+
+<body class="body_login">
+
+    <header>
+
+        <div id="container_home">
+            <a href="./index.html">
+                <img src="./assets/Home.png" alt="Home">
+            </a>
+        </div>
+
+        <div id="container_botoes_navbar">
+
+            <a href="./index.html">Início</a>
+            <a href="./index.html#container_quem_somos">Sobre</a>
+            <a href="./index.html#container_footer">Contato</a>
+
+            <button onclick="window.location.href='./login.html'">
+                Login
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main id="container_login">
+
+        <section id="login_imagem"></section>
+
+        <section id="login_formulario">
+
+            <div id="faixa_login"></div>
+
+            <div id="conteudo_login">
+
+                <h1>
+                    BEM-VINDO<br>
+                    DE VOLTA!
+                </h1>
+
+                <form id="form_login">
+
+                    <label>E-mail:</label>
+
+                    <div class="campo_login">
+
+                        <span class="icone_login">👤</span>
+
+                        <input type="email" placeholder="Insira seu e-mail">
+
+                    </div>
+
+                    <label>Senha:</label>
+
+                    <div class="campo_login">
+
+                        <span class="icone_login">🔒</span>
+
+                        <input type="password" placeholder="Insira sua senha">
+
+                    </div>
+
+                    <div id="container_botao_login">
+
+                        <button type="submit">
+                            ENTRAR
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
