@@ -1,14 +1,10 @@
 # .JAR da CodeNexus
 
----
-
 ## Qual o objetivo desse projeto?
 
 - Extrair arquivos .xlsx de um bucket S3 da AWS
 - Ler e processar os dados dos arquivos extraídos
 - Inserir esses dados numa database MySQL
-
----
 
 ## Ferramentas Utilizadas
 
@@ -42,8 +38,6 @@ se conectem e interajam com bancos de dados relacionais. Funciona como uma ponte
 Java e o banco de dados, usando drivers específicos para cada sistema de banco de dados 
 (como MySQL, PostgreSQL, Oracle, SQL Server, etc.).
 
----
-
 ## Ordem de Leitura
 
 Para fins de entendimento, recomendamos as classes do projeto sejam lidas em uma ordem específica.
@@ -51,8 +45,6 @@ Para fins de entendimento, recomendamos as classes do projeto sejam lidas em uma
 1. <u>S3Provider:</u> Responsável por criar o cliente S3 e fornecer as credenciais necessárias
 para que ele se comunique com o bucket na AWS.
 2. <u>S3Service:</u> Responsável por 
-
----
 
 ## Código com Comentários
 
