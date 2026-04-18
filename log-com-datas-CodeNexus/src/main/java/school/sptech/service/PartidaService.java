@@ -42,7 +42,7 @@ public class PartidaService {
 
             Partida partida = new Partida(dataPartida, resultado, pontos, tipo);
             partidas.add(partida);
-            log.registrarLogPartida(dataPartida, tipo);
+            log.registrarLogPartida(tipo);
 
             System.out.println("Deseja adicionar mais uma partida?(s/n)");
             String respostaPartida = sc.nextLine();

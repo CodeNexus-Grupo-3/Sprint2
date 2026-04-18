@@ -10,7 +10,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/login.css">
 
     <title>Login | CodeNexus</title>
 </head>
@@ -63,7 +63,7 @@
 
                         <span class="icone_login">👤</span>
 
-                        <input type="email" placeholder="Insira seu e-mail">
+                        <input id="email" type="email" placeholder="Insira seu e-mail">
 
                     </div>
 
@@ -73,13 +73,13 @@
 
                         <span class="icone_login">🔒</span>
 
-                        <input type="password" placeholder="Insira sua senha">
+                        <input id="senha" type="password" placeholder="Insira sua senha">
 
                     </div>
 
                     <div id="container_botao_login">
 
-                        <button type="submit">
+                        <button onclick="entrar()" type="submit">
                             ENTRAR
                         </button>
 
@@ -96,3 +96,17 @@
 </body>
 
 </html>
+<script>
+    function entrar() {
+
+        var email = document.getElementById("email").value;
+        var senha = document.getElementById("senha").value;
+
+        if (email && senha) {
+            alert("Login realizado");
+        } else {
+            alert("Preencha as colunas");
+        }
+
+    }
+</script>

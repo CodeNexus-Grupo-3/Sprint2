@@ -4,6 +4,7 @@ import school.sptech.service.JogadorService;
 import school.sptech.service.PartidaService;
 
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,6 +15,37 @@ public class Main {
         PartidaService partida = new PartidaService(sc, log);
 
         boolean encerrar = true;
+
+        for (Integer i = 0; i < 10; i++) {
+            Integer aleatorio = ThreadLocalRandom.current().nextInt(5);
+            if (aleatorio.equals(1)) {
+                Integer jogadorAleatorio = ThreadLocalRandom.current().nextInt(6);
+                if (jogadorAleatorio.equals(1)) {
+                    log.registrarLogJogador("Marina");
+                } else if (jogadorAleatorio.equals(2)) {
+                    log.registrarLogJogador("Vinícius");
+                } else if (jogadorAleatorio.equals(3)) {
+                    log.registrarLogJogador("Lucas");
+                } else if (jogadorAleatorio.equals(4)) {
+                    log.registrarLogJogador("Nicolas");
+                } else {
+                    log.registrarLogJogador("Lesley");
+                }
+            } else if (aleatorio.equals(2)) {
+                log.registrarLogJogadorErro();
+            } else if (aleatorio.equals(3)) {
+                Integer partidaAleatoria = ThreadLocalRandom.current().nextInt(6);
+                if (partidaAleatoria.equals(1)) {
+                    log.registrarLogPartida("Campeonato");
+                } else if (partidaAleatoria.equals(2)) {
+                    log.registrarLogPartida("Treino");
+                } else {
+                    log.registrarLogPartida("Amistoso");
+                }
+            } else {
+                log.registrarLogPartidaErro();
+            }
+        }
 
         System.out.print("CODENEXUS\nInsira seu e-mail: ");
         String emailCoach = sc.nextLine();
