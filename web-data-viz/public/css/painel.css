@@ -44,15 +44,20 @@ body{
 #container_opcoes{
     margin-left: 30px;
     height: 60%;
-    background-color: blue;
+    /* background-color: blue; */
     display: flex;
     flex-direction: column;
     /* align-items: center; */
     justify-content: space-around;
 }
 
+#container_opcoes span, #container_sair span{
+    color: var(--cor-fundo-escuro);
+} 
+
 #sub_container_painel, #sub_container_perfil, #sub_container_partidas, #sub_container_forum, #sub_container_calendario{
     display: flex;
+    align-items: center;
     gap: 15px;
 }
 
@@ -64,16 +69,25 @@ body{
 #sub_container_painel a, #sub_container_perfil a, #sub_container_partidas a, #sub_container_forum a, #sub_container_calendario a, #sub_container_sair a{
     text-decoration: none;
     color: var(--cor-fundo-escuro);
-    font-size: 20px;
+    font-size: 23px;
 }
+
+#sub_container_painel:hover span,#sub_container_painel a:hover, 
+#sub_container_perfil:hover span, #sub_container_perfil a:hover, 
+#sub_container_partidas:hover span, #sub_container_partidas a:hover, 
+#sub_container_forum:hover span, #sub_container_forum a:hover,
+#sub_container_calendario:hover span, #sub_container_calendario a:hover, 
+#sub_container_sair:hover span, #sub_container_sair a:hover{
+    color: #F2FF58;
+}
+
 
 #container_sair{
     display: flex;
     align-items: end;
-    
     margin-left: 30px;
     height: 22%;
-    background-color: palegoldenrod;
+    /* background-color: palegoldenrod; */
 }
 
 #sub_container_sair{
