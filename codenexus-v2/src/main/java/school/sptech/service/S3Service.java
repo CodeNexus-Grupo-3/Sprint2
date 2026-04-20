@@ -34,6 +34,10 @@ public class S3Service {
     }
 
     public void extrairObjetos (List<S3Object> objects) throws IOException {
+        File pasta = new File("ArquivosS3");
+        if (!pasta.exists()) {
+            pasta.mkdirs();
+        }
         for (S3Object object : objects) {
             GetObjectRequest getObjects = GetObjectRequest.builder()
                     .bucket(bucketName)
@@ -41,7 +45,7 @@ public class S3Service {
                     .build();
 
             InputStream inputStream = s3Client.getObject(getObjects, ResponseTransformer.toInputStream());
-            File file = new File("ArquivosS3/" + object.key());
+            File file = new File(pasta + object.key());
             Files.copy(inputStream, file.toPath());
             System.out.println("Arquivo baixado: " + object.key());
         }

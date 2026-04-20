@@ -1,12 +1,16 @@
 package school.sptech;
 
 import school.sptech.client.S3Provider;
+import school.sptech.model.Dados;
+import school.sptech.service.LeitorService;
 import school.sptech.service.S3Service;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.Bucket;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -35,5 +39,12 @@ public class Main {
             System.err.println("Erro ao fazer download dos arquivos: " + e.getMessage());
         }
 
+        LeitorService leitor = new LeitorService();
+        File pasta = new File("ArquivosS3");
+        List<Dados> dados = new ArrayList<>();
+
+        for (File file : pasta.listFiles()) {
+            dados = leitor.extrairDataset(file.getPath());
+        }
     }
 }
