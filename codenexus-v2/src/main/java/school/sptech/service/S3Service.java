@@ -22,10 +22,12 @@ public class S3Service {
     }
 
     public List<Bucket> listarBuckets () {
+        System.out.println("Listando Buckets");
         return s3Client.listBuckets().buckets();
     }
 
     public List<S3Object> listarObjetos (String nomeBucket) {
+        System.out.println("Listando os Objetos de um Bucket");
         ListObjectsRequest listObjects = ListObjectsRequest.builder()
                 .bucket(nomeBucket)
                 .build();
@@ -34,6 +36,7 @@ public class S3Service {
     }
 
     public void extrairObjetos (List<S3Object> objects) throws IOException {
+        System.out.println("Iniciando extração dos Objetos de um Bucket");
         File pasta = new File("ArquivosS3");
         if (!pasta.exists()) {
             pasta.mkdirs();
@@ -49,6 +52,7 @@ public class S3Service {
             Files.copy(inputStream, file.toPath());
             System.out.println("Arquivo baixado: " + object.key());
         }
+        System.out.println("Finalizando extração dos Objetos de um Bucket");
     }
 
     public S3Client getS3Client() {

@@ -2,7 +2,7 @@ package school.sptech.model;
 
 public class Dados {
 
-    private String duracao;
+    private Integer duracao;
     private Integer totalBaron;
     private Integer totalDrag;
     private Integer totalTorres;
@@ -13,7 +13,7 @@ public class Dados {
     private Integer totalDano;
 
     public Dados(
-            String duracao,
+            Integer duracao,
             Integer totalBaron,
             Integer totalDrag,
             Integer totalTorres,
@@ -34,7 +34,7 @@ public class Dados {
         this.totalDano = totalDano;
     }
 
-    public String getDuracao() {
+    public Integer getDuracao() {
         return duracao;
     }
 
