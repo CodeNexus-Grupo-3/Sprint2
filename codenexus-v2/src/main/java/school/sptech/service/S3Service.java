@@ -8,7 +8,6 @@ import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
@@ -35,23 +34,31 @@ public class S3Service {
         return s3Client.listObjects(listObjects).contents();
     }
 
-    public void extrairObjetos (List<S3Object> objects) throws IOException {
+    public void extrairObjetos (List<S3Object> objects) {
         System.out.println("Iniciando extração dos Objetos de um Bucket");
+
         File pasta = new File("ArquivosS3");
         if (!pasta.exists()) {
             pasta.mkdirs();
         }
-        for (S3Object object : objects) {
-            GetObjectRequest getObjects = GetObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(object.key())
-                    .build();
 
-            InputStream inputStream = s3Client.getObject(getObjects, ResponseTransformer.toInputStream());
-            File file = new File(pasta + object.key());
-            Files.copy(inputStream, file.toPath());
-            System.out.println("Arquivo baixado: " + object.key());
+        for (S3Object object : objects) {
+            try {
+                GetObjectRequest getObjects = GetObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(object.key())
+                        .build();
+
+                File file = new File(pasta, object.key());
+                try (InputStream inputStream = s3Client.getObject(getObjects, ResponseTransformer.toInputStream())) {
+                    Files.copy(inputStream, file.toPath());
+                }
+                System.out.println("Arquivo baixado: " + object.key());
+            } catch (Exception e) {
+                System.err.println("Erro ao baixar arquivo: " + object.key());
+            }
         }
+
         System.out.println("Finalizando extração dos Objetos de um Bucket");
     }
 

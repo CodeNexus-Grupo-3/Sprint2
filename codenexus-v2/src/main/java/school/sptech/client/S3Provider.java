@@ -10,6 +10,7 @@ public class S3Provider {
     private final AwsCredentialsProvider credentials;
 
     public S3Provider() {
+
         this.credentials = DefaultCredentialsProvider.create();
     }
 

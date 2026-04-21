@@ -32,9 +32,15 @@ public class LeitorService {
                 }
 
                 // Formatando a Duração
-                String duracaoString = formatter.formatCellValue(row.getCell(0));
-                String[] partes = duracaoString.split(":");
-                Integer duracao = Integer.parseInt(partes[0]) * 60 + Integer.parseInt(partes[1]);
+                Integer duracao = 0;
+                try {
+                    String duracaoString = formatter.formatCellValue(row.getCell(0));
+                    String[] partes = duracaoString.split(":");
+                    duracao = Integer.parseInt(partes[0]) * 60 + Integer.parseInt(partes[1]);
+                } catch (Exception e) {
+                    System.err.println("Erro ao converter duração na linha " + row.getRowNum());
+                    continue;
+                }
 
                 String vitoria = formatter.formatCellValue(row.getCell(1));
                 String time1 = formatter.formatCellValue(row.getCell(2));
@@ -66,6 +72,9 @@ public class LeitorService {
                     totalAssistencias = soma(row, 37);
                     totalGold = soma(row, 38);
                     totalDano = soma(row, 39);
+                } else {
+                    System.err.println("Linha inválida (vitória não bate)");
+                    continue;
                 }
 
                 Dados dado = new Dados(
@@ -84,15 +93,19 @@ public class LeitorService {
             }
 
         } catch (IOException e) {
-            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+            throw new RuntimeException("Erro ao ler o arquivo: " + caminhoArquivo, e);
         }
         System.out.println("Retornar lista dos dados extraídos");
         return dadosExtraidos;
     }
 
     private Integer getInteger(Row row, Integer cell) {
-        if (row.getCell(cell) == null) return 0;
-        return (int) row.getCell(cell).getNumericCellValue();
+        try {
+            if (row.getCell(cell) == null) return 0;
+            return (int) row.getCell(cell).getNumericCellValue();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     private Integer soma(Row row, Integer cell) {
