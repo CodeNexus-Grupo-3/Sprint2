@@ -66,19 +66,20 @@ body{
     height: 20px;
 }
 
-#sub_container_perfil a, #sub_container_partidas a, #sub_container_forum a, #sub_container_sair a{
+#sub_container_painel a, #sub_container_perfil a, #sub_container_partidas a, #sub_container_forum a, #sub_container_sair a{
     text-decoration: none;
     color: var(--cor-fundo-escuro);
     font-size: 23px;
 }
 
-#sub_container_painel span,#sub_container_painel a{
+#sub_container_forum span,#sub_container_forum a{
     text-decoration: none;
     color: #F2FF58;
     font-size: 23px;
 
 }
 
+#sub_container_painel:hover span, #sub_container_painel a:hover,
 #sub_container_perfil:hover span, #sub_container_perfil a:hover, 
 #sub_container_partidas:hover span, #sub_container_partidas a:hover, 
 #sub_container_forum:hover span, #sub_container_forum a:hover, 
