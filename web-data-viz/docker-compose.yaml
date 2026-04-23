@@ -3,6 +3,8 @@ services:
     depends_on:
       - db
     build: .
+    container_name: CodeNexus-web
+    restart: always
     ports:
       - "3333:3333"
     environment:
@@ -16,6 +18,8 @@ services:
 
   db:
     image: mysql:8.0
+    container_name: CodeNexus-mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: urubu100
       MYSQL_DATABASE: CodeNexus
