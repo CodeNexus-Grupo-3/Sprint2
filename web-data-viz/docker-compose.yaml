@@ -1,0 +1,30 @@
+services:
+  app:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - "3333:3333"
+    environment:
+      DB_HOST: db
+      DB_DATABASE: CodeNexus
+      DB_USER: root
+      DB_PASSWORD: urubu100
+      DB_PORT: 3306
+      APP_PORT: 3333
+      APP_HOST: localhost
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: urubu100
+      MYSQL_DATABASE: CodeNexus
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./src/database/comandos-DDL.sql:/docker-entrypoint-initdb.d/01-ddl.sql
+      - ./src/database/comandos-DML.sql:/docker-entrypoint-initdb.d/02-dml.sql
+
+volumes:
+  db_data:
