@@ -112,7 +112,7 @@ import java.util.List;
 
 public class S3Service {
   // Atributos
-  private final S3Client s3Client; // Cliente S3, imutável após instanciar o objeto S3Service
+  private final S3Client s3Client; // Cliente S3, imutável após instanciar o objeto ExtractService
   private String bucketName; // Nome do bucket
 
   // Construtor
@@ -194,12 +194,14 @@ como parâmetro e usa para construir uma instância ListObjectsRequest que é us
 - **extrairObjetos()**: Percorre uma lista de objetos de um bucket e salva todos eles localmente no diretório ArquivosS3
 
 ### 3. Main
+
 ```java
 package school.sptech;
 
 // Importe de classes próprias do projeto
+
 import school.sptech.client.S3Provider;
-import school.sptech.service.S3Service;
+import school.sptech.service.ExtractService;
 
 // Importe de recursos do SDK da AWS
 import software.amazon.awssdk.services.s3.S3Client;
@@ -212,39 +214,39 @@ import java.util.List;
 
 // Ponto de entrada do programa
 public class Main {
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    // Instanciando o cliente S3 através do S3Provider
-    S3Provider provider = new S3Provider();
-    S3Client s3Client = provider.getS3Client();
+        // Instanciando o cliente S3 através do S3Provider
+        S3Provider provider = new S3Provider();
+        S3Client s3Client = provider.getS3Client();
 
-    // Instanciando o objeto S3Service que manipula o bucket S3 através do client S3
-    S3Service s3 = new S3Service(s3Client);
+        // Instanciando o objeto ExtractService que manipula o bucket S3 através do client S3
+        ExtractService s3 = new ExtractService(s3Client);
 
-    // Salva o nome do bucket que será manipulado
-    String nomeBucket = "s3-codenexus";
+        // Salva o nome do bucket que será manipulado
+        String nomeBucket = "s3-codenexus";
 
-    try {
-      // Cria uma lista de buckets  
-      List<Bucket> listaBuckets = s3.listarBuckets();
-      // Percorre essa lista buscando o bucket que deseja manipular
-      for (Bucket bucket : listaBuckets) {
-        if (bucket.name().equals(nomeBucket)) {
-          s3.setBucketName(nomeBucket); // Salva o nome do bucket na instância da classe S3Service
-          break; // Finaliza o loop
+        try {
+            // Cria uma lista de buckets  
+            List<Bucket> listaBuckets = s3.listarBuckets();
+            // Percorre essa lista buscando o bucket que deseja manipular
+            for (Bucket bucket : listaBuckets) {
+                if (bucket.name().equals(nomeBucket)) {
+                    s3.setBucketName(nomeBucket); // Salva o nome do bucket na instância da classe ExtractService
+                    break; // Finaliza o loop
+                }
+            }
+        } catch (S3Exception e) {
+            System.err.println("Erro ao listar buckets: " + e.getMessage());
         }
-      }
-    } catch (S3Exception e) {
-      System.err.println("Erro ao listar buckets: " + e.getMessage());
+
+        try {
+            // Lista todos os objetos do bucket
+            // Extrai (donwload) os objetos da lista  
+            s3.extrairObjetos(s3.listarObjetos(nomeBucket));
+        } catch (IOException | S3Exception e) {
+            System.err.println("Erro ao fazer download dos arquivos: " + e.getMessage());
+        }
     }
-    
-    try {
-      // Lista todos os objetos do bucket
-      // Extrai (donwload) os objetos da lista  
-      s3.extrairObjetos(s3.listarObjetos(nomeBucket));
-    } catch (IOException | S3Exception e) {
-      System.err.println("Erro ao fazer download dos arquivos: " + e.getMessage());
-    }
-  }
 }
 ```

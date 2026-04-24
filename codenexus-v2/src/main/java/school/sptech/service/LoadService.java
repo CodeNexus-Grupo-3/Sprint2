@@ -3,25 +3,26 @@ package school.sptech.service;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import school.sptech.model.Dados;
-import school.sptech.model.Log;
 
 import java.util.List;
 
-public class BDService {
+public class LoadService {
 
     private final JdbcTemplate jdbcTemplate;
+    private final LogService logService;
 
-    public BDService(JdbcTemplate jdbcTemplate) {
+    public LoadService(JdbcTemplate jdbcTemplate, LogService logService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.logService = logService;
     }
 
     public void save(List<Dados> dados) {
-        System.out.println("Início da inserção no banco");
-
         if (dados == null || dados.isEmpty()) {
-            System.out.println("Nenhum dado para inserir");
+            logService.sucesso("INFO", "Nenhum dado para inserir", "LoadService");
             return;
         }
+
+        logService.sucesso("INFO", "Iniciando inserção de " + dados.size() + " registros", "LoadService");
 
         for (Dados dado : dados) {
             try {
@@ -37,31 +38,10 @@ public class BDService {
                         dado.getTotalGold(),
                         dado.getTotalDano());
             } catch (DataAccessException e) {
-                System.err.println("Erro ao inserir dado da dashboard no banco");
+                logService.erro("ERRO", "Erro ao inserir dados no banco", "LoadService", e.getMessage(), e.toString());
             }
         }
 
-        System.out.println("Fim da inserção no banco");
-    }
-
-    public void saveLog(Log log) {
-        if (log == null) {
-            System.out.println("Nenhum log para inserir");
-            return;
-        }
-
-        try {
-            jdbcTemplate.update(
-                    "INSERT INTO Log VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)",
-                    log.getDataHora(),
-                    log.getStatus(),
-                    log.getEvento(),
-                    log.getServico(),
-                    log.getMensagemErro(),
-                    log.getStacktrace(),
-                    log.getFkUsuario());
-        } catch (DataAccessException e) {
-            System.err.println("Erro ao inserir log no banco");
-        }
+        logService.sucesso("SUCESSO", "Dados inseridos com sucesso", "LoadService");
     }
 }
