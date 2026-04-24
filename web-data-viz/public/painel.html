@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
     <link rel="stylesheet" href="./css/painel.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <title>CodeNexus</title>
 
 </head>
@@ -47,11 +50,315 @@
     </div>
 
     <div id="container_principal">
-       <!-- digita o código aqui -->
+        <div class="container_titulo_pag">
+            <span class="titulo_pag">PAINEL COMPARATIVO DE DESEMPENHO</span>
+            
+            <div class="topo_esq">
+                <div class="container_legenda_topo">
+                    <span class="legenda_topo1">time</span>
+                    <span class="legenda_topo2">|</span>
+                    <span class="legenda_topo3">geral</span>
+                </div>
+                <div class="container_user">
+                    <span class="user_letra">M</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container_kpis">
+            <div class="kpi">
+                <div class="kpi_text_container">
+                    <span class="kpi_title">DURAÇÃO MÉDIA</span>
+
+                    <div class="data">
+                        <span class="data1">12.500</span>
+                        <span>|</span>
+                        <span class="data2">10.000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="kpi">
+                <div class="kpi_text_container">
+                    <span class="kpi_title">GOLD MÉDIO</span>
+
+                    <div class="data">
+                        <span class="data1">12.500</span>
+                        <span>|</span>
+                        <span class="data2">10.000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="kpi">
+                <div class="kpi_text_container">
+                    <span class="kpi_title">GOLD MÉDIO</span>
+
+                    <div class="data">
+                        <span class="data1">12.500</span>
+                        <span>|</span>
+                        <span class="data2">10.000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="kpi">
+                <div class="kpi_text_container">
+                    <span class="kpi_title">GOLD MÉDIO</span>
+
+                    <div class="data">
+                        <span class="data1">12.500</span>
+                        <span>|</span>
+                        <span class="data2">10.000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="kpi">
+                <div class="kpi_text_container">
+                    <span class="kpi_title">GOLD MÉDIO</span>
+
+                    <div class="data">
+                        <span class="data1">12.500</span>
+                        <span>|</span>
+                        <span class="data2">10.000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container_graficos">
+            <div class="container_graf_esq">
+                <div class="container_graf1">
+                    <canvas id="grafico1"></canvas>
+                </div>
+
+                <div class="container_graf2">
+                    <div class="container_grafico2_graf">
+                        <canvas id="grafico2"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container_graf_dir">
+                <div class="container_graf_graf">
+                    <canvas id="grafico"></canvas>
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
 </body>
 </html>
 <script>
+    const ctx = document.getElementById('grafico');
+    Chart.defaults.font.family = 'Goldman';
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Dragões', 'Barões', 'Torres'],
+            datasets: [
+                {
+                    label: 'Time',
+                    data: [2, 2, 8],
+                    backgroundColor: '#e6f14a'
+                },
+                {
+                    label: 'Geral',
+                    data: [3, 1, 9],
+                    backgroundColor: '#1f7a73'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'OBJETIVOS\nPOR JOGO',
+                    padding: {
+                        bottom: 30,
+                    },
+                    color: '#ffffff',
+                    font: {
+                        size: 24,
+                        weight: '400'
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        padding: 4,
+                        font: {
+                            size: 20,
+                        },
+                        color: '#ffffff'
+                    },
+                    grid: {
+                        color: '#cccccc33'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#ffffff'
+                    },
+                    grid: {
+                        color: '#cccccc33'
+                    }
+                }
+            }
+        }
+    });
+
+
+    const ctxy = document.getElementById('grafico2').getContext('2d');
+
+  const data = {
+    labels: ['Gold', 'Dano', 'Tank'], // As 3 fileiras
+    datasets: [
+      {
+        label: 'Time',
+        // Valores negativos para crescerem à esquerda
+        data: [-59426, -79531, -60324], 
+        backgroundColor: '#e6f14a',
+        borderSkipped: false,
+      },
+      {
+        label: 'Geral',
+        // Valores positivos para crescerem à direita
+        data: [71245, 75817, 85288],
+        backgroundColor: '#1f7a73',
+        borderSkipped: false,
+      }
+    ]
+  };
+
+  new Chart(ctxy, {
+    type: 'bar',
+    data: data,
+    options: {
+      indexAxis: 'y', // Inverte para barras horizontais
+      responsive: true,
+      maintainAspectRatio: false,
+      
+      scales: {
+        x: {
+          stacked: true, // Crucial para o efeito de divergência
+          min: -100000,
+          max: 100000,
+          grid: {
+            color: '#eeeeee33',
+          },
+          ticks: {
+            // Remove o sinal negativo dos números no eixo X
+            color: '#ffffff',
+            callback: (value) => Math.abs(value) 
+          }
+        },
+        y: {
+          stacked: true,
+          grid: {
+            display: false // Limpa o fundo atrás das barras
+          },
+          ticks: {
+            color: '#ffffff',
+            crossAlign: 'left',
+            font: {
+                size: 20,
+                weight: '300',
+            },
+            
+          }
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            // Remove o sinal negativo do balão de informação (hover)
+            label: (context) => {
+              const label = context.dataset.label || '';
+              const value = Math.abs(context.raw);
+              return `${label}: ${value}`;
+            }
+          }
+        },
+        legend: {
+         display: false,
+        }
+      }
+    }
+  });
+
+   const ctxyz = document.getElementById('grafico1').getContext('2d');
+
+  const dataArea = {
+    labels: ['Abates', 'Assistências', 'Mortes'],
+    datasets: [
+      {
+        label: 'time',
+        data: [27, 15, 11],
+        borderColor: '#F2FF58',
+        backgroundColor: 'rgba(242, 255, 88, 0.4)', // Amarelo com transparência
+        fill: true,
+        tension: 0.3 // Deixa as linhas levemente curvas
+      },
+      {
+        label: 'geral',
+        data: [23, 40, 16],
+        borderColor: '#066B68',
+        backgroundColor: 'rgba(6, 107, 104, 0.6)', // Verde com transparência
+        fill: true,
+        tension: 0.3
+      }
+    ]
+  };
+
+  new Chart(ctxyz, {
+    type: 'line',
+    data: dataArea,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+            display: false,
+          labels: { color: '#ffffff' } // Legenda em branco para fundo escuro
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255, 255, 255, 0.1)' },
+          ticks: { 
+            color: '#ffffff',
+            padding: 10,
+            font: {
+                size: 18,
+                weight: '300',
+            } 
+        }
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: 'rgba(255, 255, 255, 0.1)' },
+          ticks: { 
+            padding: 10,
+            color: '#ffffff',
+          }
+        }
+      }
+    }
+  });
+
+
     function sair(){
         
     }
