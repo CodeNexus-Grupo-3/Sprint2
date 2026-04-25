@@ -47,7 +47,54 @@
     </div>
 
     <div id="container_principal">
-       <!-- digita o código aqui -->
+      
+    <div id="forum_topo">
+        <h2>SALA DE TREINAMENTO</h2>
+        <span class="material-symbols-outlined">account_circle</span>
+    </div>
+
+    <!-- area da postagem no forum-->
+    <div id="area_postagem">
+
+        <div id="post_input">
+            <span class="material-symbols-outlined">account_circle</span>
+
+            <div id="campo_post">
+                <textarea id="mensagem" placeholder="O que você quer dizer?"></textarea>
+                <div id="acoes_post">
+                    <div>
+                        <span class="material-symbols-outlined">image</span>
+                        <span class="material-symbols-outlined">attach_file</span>
+                    </div>
+
+                    <button onclick="postarMensagem()">POSTAR</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- a lista de todos os posts que for feito -->
+    <div id="lista_posts">
+
+        <div class="post">
+            <span class="material-symbols-outlined">account_circle</span>
+
+            <div class="conteudo_post">
+                <h3>TREINADOR</h3>
+                <p>
+                    @jogador, aqui está a estratégia que discutimos antes!
+                </p>
+
+                <div class="imagens_post">
+                    <div class="img_fake"></div>
+                    <div class="img_fake"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     </div>
 </body>
 </html>
@@ -55,4 +102,40 @@
     function sair(){
         
     }
+
+
+
+
+    function postarMensagem(){
+
+    
+    const mensagem = document.getElementById("mensagem").value;
+
+    
+    if(mensagem.trim() === ""){
+        alert("Digite uma mensagem!");
+        return;
+    }
+
+   
+    const novoPost = document.createElement("div");
+    novoPost.classList.add("post");
+
+    novoPost.innerHTML = `
+        <span class="material-symbols-outlined">account_circle</span>
+
+        <div class="conteudo_post">
+            <h3>VOCÊ</h3>
+            <p>${mensagem}</p>
+        </div>
+    `;
+
+   // aqui e onde eu adciono a mensagem no forum
+    document.getElementById("lista_posts")
+        .prepend(novoPost);
+
+   
+    document.getElementById("mensagem").value = "";
+}
+
 </script>
