@@ -51,7 +51,7 @@
 
     <div id="container_principal">
         <div class="container_titulo_pag">
-            <span class="titulo_pag">PAINEL COMPARATIVO DE DESEMPENHO</span>
+            <span class="titulo_pag">PAINEL COMPARATIVO DE DESEMPENHO MÉDIO</span>
             
             <div class="topo_esq">
                 <div class="container_legenda_topo">
@@ -68,7 +68,7 @@
         <div class="container_kpis">
             <div class="kpi">
                 <div class="kpi_text_container">
-                    <span class="kpi_title">DURAÇÃO MÉDIA</span>
+                    <span class="kpi_title">DURAÇÃO</span>
 
                     <div class="data">
                         <span class="data1">12.500</span>
@@ -80,7 +80,7 @@
             
             <div class="kpi">
                 <div class="kpi_text_container">
-                    <span class="kpi_title">GOLD MÉDIO</span>
+                    <span class="kpi_title">DANO POR <br> MINUTO</span>
 
                     <div class="data">
                         <span class="data1">12.500</span>
@@ -92,7 +92,7 @@
             
             <div class="kpi">
                 <div class="kpi_text_container">
-                    <span class="kpi_title">GOLD MÉDIO</span>
+                    <span class="kpi_title">OURO POR <br> MINUTO</span>
 
                     <div class="data">
                         <span class="data1">12.500</span>
@@ -104,7 +104,7 @@
             
             <div class="kpi">
                 <div class="kpi_text_container">
-                    <span class="kpi_title">GOLD MÉDIO</span>
+                    <span class="kpi_title">ÍNDICE DE <BR> TANKING</span>
 
                     <div class="data">
                         <span class="data1">12.500</span>
@@ -130,12 +130,12 @@
         <div class="container_graficos">
             <div class="container_graf_esq">
                 <div class="container_graf1">
-                    <canvas id="grafico1"></canvas>
+                    <canvas id="grafico2"></canvas>
                 </div>
 
                 <div class="container_graf2">
                     <div class="container_grafico2_graf">
-                        <canvas id="grafico2"></canvas>
+                        <canvas id="grafico1"></canvas>
                     </div>
                 </div>
             </div>
@@ -164,12 +164,16 @@
                 {
                     label: 'Time',
                     data: [2, 2, 8],
-                    backgroundColor: '#e6f14a'
+                    borderColor: '#e6f14a',
+                    borderWidth: 2,
+                    backgroundColor: '#e6f14a80'
                 },
                 {
                     label: 'Geral',
                     data: [3, 1, 9],
-                    backgroundColor: '#1f7a73'
+                    borderColor: '#1f7a73',
+                    borderWidth: 2,
+                    backgroundColor: '#1f7a7370'
                 }
             ]
         },
@@ -229,14 +233,18 @@
         label: 'Time',
         // Valores negativos para crescerem à esquerda
         data: [-59426, -79531, -60324], 
-        backgroundColor: '#e6f14a',
+        borderColor: '#e6f14a',
+        borderWidth: 1,
+        backgroundColor: '#e6f14a60',
         borderSkipped: false,
       },
       {
         label: 'Geral',
         // Valores positivos para crescerem à direita
         data: [71245, 75817, 85288],
-        backgroundColor: '#1f7a73',
+        borderColor: '#1f7a73',
+        borderWidth: 1,
+        backgroundColor: '#1f7a7350',
         borderSkipped: false,
       }
     ]
@@ -341,7 +349,7 @@
             color: '#ffffff',
             padding: 10,
             font: {
-                size: 18,
+                size: 20,
                 weight: '300',
             } 
         }

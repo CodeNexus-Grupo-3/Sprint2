@@ -149,8 +149,8 @@ body{
 }
 
 .container_legenda_topo {
-    border: 2px solid #ffffff;
-    width: 60%;
+    border: 1px solid #ffffff;
+    width: 65%;
     height: 90%;
     display: flex;
     justify-content: space-around;
@@ -216,7 +216,7 @@ body{
 }
 
 .kpi_title{
-    font-size: 28px;
+    font-size: 26px;
 }
 
 .data{
