@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
-    <link rel="stylesheet" href="./css/partidas.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <title>CodeNexus</title>
-
+    <link rel="stylesheet" href="./css/partidas.css">   
 </head>
 <body>
+
     <div id="sidebar" class="sidebar">
         <div id="container_titulo">
             <img src="assets/logo_codenexus_sem_fundo.png" alt="">
@@ -30,14 +30,13 @@
             </div>
             <div id="sub_container_partidas">
                 <span class="material-symbols-outlined">contract</span>
-                <a href="partidas.html"id="sub_container_partidas_a">PARTIDAS</a>
+                <a href="partidas.html" id="sub_container_partidas_a">PARTIDAS</a>
             </div>
             <div id="sub_container_forum">
-                <span class="material-symbols-outlined">forum</span>   
+                <span class="material-symbols-outlined">forum</span>
                 <a href="forum.html" id="sub_container_forum_a">FÓRUM</a>
             </div>
         </div>
-
         <div id="container_sair">
             <div id="sub_container_sair">
                 <span class="material-symbols-outlined">logout</span>
@@ -46,13 +45,408 @@
         </div>
     </div>
 
+
     <div id="container_principal">
-       <!-- digita o código aqui -->
+
+
+        <div class="view" id="view-historico">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="dot"></div>
+                    <h1>Histórico de Partidas</h1>
+                </div>
+                <button class="btn-cadastrar" onclick="cadastrarPartida()">
+                    <span class="material-symbols-outlined" style="font-size:16px">add</span>
+                    CADASTRAR +
+                </button>
+            </div>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>RESULTADO</th>
+                            <th>MAPA</th>
+                            <th>PONTOS</th>
+                            <th>DATA</th>
+                            <th>TIPO</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-body"></tbody>
+                </table>
+                <div class="empty-state" id="empty-state" style="display:none">
+                    <span class="material-symbols-outlined">inbox</span>
+                    NENHUMA PARTIDA CADASTRADA
+                </div>
+            </div>
+        </div>
+
+
+        <div class="view hidden" id="view-partida">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="dot"></div>
+                    <div>
+                        <h1 class="partida-num" id="partida-titulo">PARTIDA Nº 1</h1>
+                        <div class="partida-meta" id="partida-meta"></div>
+                    </div>
+                </div>
+                <button class="btn-voltar" onclick="voltarHistorico()">
+                    <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+                    VOLTAR
+                </button>
+            </div>
+
+            <div class="kpis-grid" id="kpis-grid"></div>
+
+            <div class="bottom-grid">
+                <div class="card">
+                    <div class="card-title">Desempenho por Jogador</div>
+                    <table class="tabela-jogadores">
+                        <thead>
+                            <tr>
+                                <th>JOGADOR</th>
+                                <th>CHAMPION</th>
+                                <th>LANE</th>
+                                <th>KDA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-jogadores-body"></tbody>
+                    </table>
+                </div>
+                <div class="card">
+                    <div class="card-title">Progressão de Dano</div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-linha"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-grid" style="margin-top:20px">
+                <div class="card">
+                    <div class="card-title">Participação em Kills</div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-pizza"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">KDA por Jogador</div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-barras"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+<script>
+let partidas = [
+    {
+        id: 2,
+        resultado: 'VITÓRIA',
+        mapa: 'SUMM. RIFT',
+        pontos: 30,
+        data: '07/03/26',
+        tipo: 'TREINO',
+        jogadores: [
+            { nome: 'ShadowAce',  champion: 'Jinx',   lane: 'ADC', kills: 8, deaths: 2, assists: 10 },
+            { nome: 'IronMage',   champion: 'Lux',    lane: 'SUP', kills: 2, deaths: 3, assists: 18 },
+            { nome: 'TopFrag',    champion: 'Darius', lane: 'TOP', kills: 7, deaths: 4, assists: 5  },
+            { nome: 'JungleBoss', champion: 'Vi',     lane: 'JNG', kills: 5, deaths: 3, assists: 12 },
+            { nome: 'MidLord',    champion: 'Syndra', lane: 'MID', kills: 9, deaths: 1, assists: 7  },
+        ],
+        dano: [1200, 2400, 3100, 4800, 6200, 8500, 9800, 11200, 14000, 18000],
+    },
+    {
+        id: 1,
+        resultado: 'DERROTA',
+        mapa: 'SUMM. RIFT',
+        pontos: 10,
+        data: '09/03/26',
+        tipo: 'RANKED',
+        jogadores: [
+            { nome: 'ShadowAce',  champion: 'Caitlyn', lane: 'ADC', kills: 3, deaths: 6, assists: 4 },
+            { nome: 'IronMage',   champion: 'Thresh',  lane: 'SUP', kills: 1, deaths: 5, assists: 9 },
+            { nome: 'TopFrag',    champion: 'Garen',   lane: 'TOP', kills: 4, deaths: 7, assists: 3 },
+            { nome: 'JungleBoss', champion: 'Lee Sin', lane: 'JNG', kills: 2, deaths: 8, assists: 6 },
+            { nome: 'MidLord',    champion: 'Ahri',    lane: 'MID', kills: 5, deaths: 5, assists: 5 },
+        ],
+        dano: [900, 1500, 2200, 3000, 4100, 5200, 6000, 6800, 7200, 7600],
+    },
+];
+let proximoId = 3;
+let chartLinha = null, chartPizza = null, chartBarras = null;
+
+function renderTabela() {
+    const tbody = document.getElementById('tabela-body');
+    const empty = document.getElementById('empty-state');
+    tbody.innerHTML = '';
+
+    if (partidas.length === 0) { empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+
+    partidas.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.dataset.id = p.id;
+
+        const resClasse  = p.resultado === 'VITÓRIA' ? 'badge-vitoria'
+                         : p.resultado === 'DERROTA' ? 'badge-derrota' : 'badge-empate';
+        const tipoClasse = p.tipo === 'TREINO' ? 'badge-treino'
+                         : p.tipo === 'RANKED' ? 'badge-ranked' : 'badge-amistoso';
+
+        tr.innerHTML = `
+            <td>${p.id}</td>
+            <td><span class="badge ${resClasse}">${p.resultado}</span></td>
+            <td>${p.mapa}</td>
+            <td><span class="pontos-num">${p.pontos}</span></td>
+            <td>${p.data}</td>
+            <td><span class="badge ${tipoClasse}">${p.tipo}</span></td>
+            <td>
+                <div class="cell-acoes">
+                    <button class="btn-icon" title="Ver detalhes" onclick="abrirPartida(${p.id})">open_in_new</button>
+                    <button class="btn-icon deletar" title="Excluir" onclick="excluirPartida(event,${p.id})">delete</button>
+                </div>
+            </td>
+        `;
+
+        tr.addEventListener('click', e => {
+            if (e.target.closest('.btn-icon')) return;
+            abrirPartida(p.id);
+        });
+
+        tbody.appendChild(tr);
+    });
+}
+
+
+function cadastrarPartida() {
+    const tbody  = document.getElementById('tabela-body');
+    const novoId = proximoId++;
+    const tr     = document.createElement('tr');
+    tr.classList.add('nova-linha', 'editando');
+    tr.dataset.id = novoId;
+
+    tr.innerHTML = `
+        <td>${novoId}</td>
+        <td>
+            <select class="input-tabela" id="res-${novoId}">
+                <option>VITÓRIA</option>
+                <option>DERROTA</option>
+                <option>EMPATE</option>
+            </select>
+        </td>
+        <td>
+            <select class="input-tabela" id="mapa-${novoId}">
+                <option>SUMM. RIFT</option>
+                <option>ARAM</option>
+                <option>TFT</option>
+                <option>ARENA</option>
+            </select>
+        </td>
+        <td><input class="input-tabela" id="pts-${novoId}" type="number" placeholder="0" min="0" style="width:60px"></td>
+        <td><input class="input-tabela" id="data-${novoId}" type="text" placeholder="DD/MM/AA"></td>
+        <td>
+            <select class="input-tabela" id="tipo-${novoId}">
+                <option>TREINO</option>
+                <option>RANKED</option>
+                <option>AMISTOSO</option>
+            </select>
+        </td>
+        <td>
+            <div class="cell-acoes">
+                <button class="btn-icon" title="Salvar" onclick="salvarPartida(${novoId})">check_circle</button>
+                <button class="btn-icon deletar" title="Cancelar" onclick="cancelarCadastro(${novoId})">cancel</button>
+            </div>
+        </td>
+    `;
+
+    tbody.insertBefore(tr, tbody.firstChild);
+    document.getElementById(`data-${novoId}`).focus();
+}
+
+function salvarPartida(id) {
+    const res  = document.getElementById(`res-${id}`).value;
+    const mapa = document.getElementById(`mapa-${id}`).value;
+    const pts  = parseInt(document.getElementById(`pts-${id}`).value) || 0;
+    const data = document.getElementById(`data-${id}`).value || '--/--/--';
+    const tipo = document.getElementById(`tipo-${id}`).value;
+
+    const jogadoresPadrao = [
+        { nome: 'Jogador 1', champion: '---', lane: 'TOP', kills: 0, deaths: 0, assists: 0 },
+        { nome: 'Jogador 2', champion: '---', lane: 'JNG', kills: 0, deaths: 0, assists: 0 },
+        { nome: 'Jogador 3', champion: '---', lane: 'MID', kills: 0, deaths: 0, assists: 0 },
+        { nome: 'Jogador 4', champion: '---', lane: 'ADC', kills: 0, deaths: 0, assists: 0 },
+        { nome: 'Jogador 5', champion: '---', lane: 'SUP', kills: 0, deaths: 0, assists: 0 },
+    ];
+
+    partidas.unshift({ id, resultado: res, mapa, pontos: pts, data, tipo, jogadores: jogadoresPadrao, dano: [0,0,0,0,0,0,0,0,0,0] });
+    renderTabela();
+}
+
+function cancelarCadastro(id) {
+    const tr = document.querySelector(`tr[data-id="${id}"]`);
+    if (tr) tr.remove();
+    proximoId--;
+    checkEmpty();
+}
+
+function checkEmpty() {
+    document.getElementById('empty-state').style.display = partidas.length === 0 ? 'block' : 'none';
+}
+
+function excluirPartida(e, id) {
+    e.stopPropagation();
+    partidas = partidas.filter(p => p.id !== id);
+    renderTabela();
+}
+
+function abrirPartida(id) {
+    const p = partidas.find(x => x.id === id);
+    if (!p) return;
+
+    document.getElementById('partida-titulo').textContent = `PARTIDA Nº ${p.id}`;
+
+    const resClasse  = p.resultado === 'VITÓRIA' ? 'badge-vitoria'
+                     : p.resultado === 'DERROTA' ? 'badge-derrota' : 'badge-empate';
+    const tipoClasse = p.tipo === 'TREINO' ? 'badge-treino'
+                     : p.tipo === 'RANKED' ? 'badge-ranked' : 'badge-amistoso';
+
+    document.getElementById('partida-meta').innerHTML = `
+        <span class="badge ${resClasse}">${p.resultado}</span>
+        <span class="badge ${tipoClasse}">${p.tipo}</span>
+        <span style="color:var(--cor-texto-suave);font-size:12px">${p.mapa} · ${p.data}</span>
+    `;
+
+    const totalKills   = p.jogadores.reduce((a, j) => a + j.kills,   0);
+    const totalDeaths  = p.jogadores.reduce((a, j) => a + j.deaths,  0);
+    const totalAssists = p.jogadores.reduce((a, j) => a + j.assists, 0);
+    const kdaGlobal    = totalDeaths > 0 ? ((totalKills + totalAssists) / totalDeaths).toFixed(2) : '∞';
+    const danoTotal    = p.dano[p.dano.length - 1].toLocaleString('pt-BR');
+    const mvp          = [...p.jogadores].sort((a, b) =>
+        (b.kills + b.assists - b.deaths) - (a.kills + a.assists - a.deaths)
+    )[0].nome;
+
+    document.getElementById('kpis-grid').innerHTML = `
+        <div class="kpi-card"><div class="kpi-label">Total de Kills</div><div class="kpi-value">${totalKills}</div><div class="kpi-sub">Time completo</div></div>
+        <div class="kpi-card"><div class="kpi-label">Total de Deaths</div><div class="kpi-value">${totalDeaths}</div><div class="kpi-sub">Time completo</div></div>
+        <div class="kpi-card"><div class="kpi-label">Total de Assists</div><div class="kpi-value">${totalAssists}</div><div class="kpi-sub">Time completo</div></div>
+        <div class="kpi-card"><div class="kpi-label">KDA Global</div><div class="kpi-value">${kdaGlobal}</div><div class="kpi-sub">Média do time</div></div>
+        <div class="kpi-card"><div class="kpi-label">Dano Total</div><div class="kpi-value" style="font-size:16px">${danoTotal}</div><div class="kpi-sub">MVP: ${mvp}</div></div>
+    `;
+
+    const tbody = document.getElementById('tabela-jogadores-body');
+    tbody.innerHTML = '';
+    p.jogadores.forEach(j => {
+        const kda      = j.deaths > 0 ? ((j.kills + j.assists) / j.deaths).toFixed(1) : '∞';
+        const kdaClass = parseFloat(kda) >= 3 ? 'kda-pos' : j.deaths > j.kills ? 'kda-neg' : '';
+        tbody.innerHTML += `
+            <tr>
+                <td>${j.nome}</td>
+                <td>${j.champion}</td>
+                <td><span class="lane-badge">${j.lane}</span></td>
+                <td><span class="${kdaClass}">${j.kills}/${j.deaths}/${j.assists}</span></td>
+            </tr>
+        `;
+    });
+
+    if (chartLinha)  { chartLinha.destroy();  chartLinha  = null; }
+    if (chartPizza)  { chartPizza.destroy();  chartPizza  = null; }
+    if (chartBarras) { chartBarras.destroy(); chartBarras = null; }
+
+    Chart.defaults.color = '#3f5551';
+    Chart.defaults.font.family = 'Goldman';
+
+    // Linha progressão de dano
+    const ctxLinha  = document.getElementById('chart-linha').getContext('2d');
+    const gradLinha = ctxLinha.createLinearGradient(0, 0, 0, 180);
+    gradLinha.addColorStop(0, 'rgba(242,255,88,0.3)');
+    gradLinha.addColorStop(1, 'rgba(242,255,88,0)');
+    chartLinha = new Chart(ctxLinha, {
+        type: 'line',
+        data: {
+            labels: ['1','2','3','4','5','6','7','8','9','10'],
+            datasets: [{
+                data: p.dano,
+                borderColor: '#F2FF58',
+                borderWidth: 2,
+                backgroundColor: gradLinha,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#F2FF58',
+                pointRadius: 3,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } },
+                y: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } }
+            }
+        }
+    });
+
+    // Pizza participação em kills
+    const laneColors = ['#F2FF58','#4ade80','#60a5fa','#f87171','#c084fc'];
+    const ctxPizza   = document.getElementById('chart-pizza').getContext('2d');
+    chartPizza = new Chart(ctxPizza, {
+        type: 'doughnut',
+        data: {
+            labels: p.jogadores.map(j => j.lane),
+            datasets: [{
+                data: p.jogadores.map(j => j.kills + j.assists),
+                backgroundColor: laneColors.map(c => c + '99'),
+                borderColor: laneColors,
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'right', labels: { font: { size: 10 }, padding: 12 } } }
+        }
+    });
+
+    // Barras KDA por jogador
+    const ctxBarras = document.getElementById('chart-barras').getContext('2d');
+    chartBarras = new Chart(ctxBarras, {
+        type: 'bar',
+        data: {
+            labels: p.jogadores.map(j => j.nome.split(' ')[0]),
+            datasets: [
+                { label: 'Kills',   data: p.jogadores.map(j => j.kills),   backgroundColor: 'rgba(74,222,128,0.7)',  borderColor: '#4ade80', borderWidth: 1 },
+                { label: 'Deaths',  data: p.jogadores.map(j => j.deaths),  backgroundColor: 'rgba(248,113,113,0.7)', borderColor: '#f87171', borderWidth: 1 },
+                { label: 'Assists', data: p.jogadores.map(j => j.assists), backgroundColor: 'rgba(96,165,250,0.7)',  borderColor: '#60a5fa', borderWidth: 1 },
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { font: { size: 10 }, padding: 10 } } },
+            scales: {
+                x: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } },
+                y: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } }
+            }
+        }
+    });
+
+    document.getElementById('view-historico').classList.add('hidden');
+    document.getElementById('view-partida').classList.remove('hidden');
+}
+
+function voltarHistorico() {
+    document.getElementById('view-partida').classList.add('hidden');
+    document.getElementById('view-historico').classList.remove('hidden');
+}
+
+function sair() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        window.location.href = 'index.html';
+    }
+}
+
+renderTabela();
+</script>
 </body>
 </html>
-<script>
-    function sair(){
-        
-    }
-</script>
