@@ -52,14 +52,25 @@
         <div class="view" id="view-historico">
             <div class="section-header">
                 <div class="section-title">
-                    <div class="dot"></div>
-                    <h1>Histórico de Partidas</h1>
+                    <span>Histórico de Partidas</span>
                 </div>
+
+                <div class="container_user">
+                    <span class="user_letra">M</span>
+                </div>
+            </div>
+
+            <div class="second_section">
+                <div class="winrate_box">
+                    <span>TAXA DE VITÓRIA: 50%</span>
+                </div>
+
                 <button class="btn-cadastrar" onclick="cadastrarPartida()">
                     <span class="material-symbols-outlined" style="font-size:16px">add</span>
-                    CADASTRAR +
+                    CADASTRAR
                 </button>
             </div>
+
 
             <div class="tabela-container">
                 <table>
@@ -67,10 +78,17 @@
                         <tr>
                             <th>#</th>
                             <th>RESULTADO</th>
-                            <th>MAPA</th>
+                            <th>DURAÇÃO</th>
+                            <th>ABATES</th>
+                            <th>ASSISTÊNCIAS</th>
+                            <th>MORTES</th>
+                            <th>GOLD</th>
+                            <th>DANO</th>
+                            <th>BARÕES</th>
+                            <th>DRAGÕES</th>
+                            <th>TORRES</th>
                             <th>PONTOS</th>
                             <th>DATA</th>
-                            <th>TIPO</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -147,34 +165,48 @@ let partidas = [
     {
         id: 2,
         resultado: 'VITÓRIA',
-        mapa: 'SUMM. RIFT',
-        pontos: 30,
+        duração: '23:34',
+        abates: '30',
+        assistências: '27',
+        mortes: '18',
+        gold: '18.211',
+        dano: '43.721',
+        barões: '1',
+        dragões: '2',
+        torres: '3',
+        pontos: '30',
         data: '07/03/26',
-        tipo: 'TREINO',
-        jogadores: [
+        /* jogadores: [
             { nome: 'ShadowAce',  champion: 'Jinx',   lane: 'ADC', kills: 8, deaths: 2, assists: 10 },
             { nome: 'IronMage',   champion: 'Lux',    lane: 'SUP', kills: 2, deaths: 3, assists: 18 },
             { nome: 'TopFrag',    champion: 'Darius', lane: 'TOP', kills: 7, deaths: 4, assists: 5  },
             { nome: 'JungleBoss', champion: 'Vi',     lane: 'JNG', kills: 5, deaths: 3, assists: 12 },
             { nome: 'MidLord',    champion: 'Syndra', lane: 'MID', kills: 9, deaths: 1, assists: 7  },
         ],
-        dano: [1200, 2400, 3100, 4800, 6200, 8500, 9800, 11200, 14000, 18000],
+        dano: [1200, 2400, 3100, 4800, 6200, 8500, 9800, 11200, 14000, 18000], */
     },
     {
         id: 1,
         resultado: 'DERROTA',
-        mapa: 'SUMM. RIFT',
-        pontos: 10,
-        data: '09/03/26',
-        tipo: 'RANKED',
-        jogadores: [
+        duração: '23:34',
+        abates: '30',
+        assistências: '27',
+        mortes: '18',
+        gold: '18.211',
+        dano: '43.721',
+        barões: '1',
+        dragões: '2',
+        torres: '3',
+        pontos: '30',
+        data: '07/03/26',
+        /* jogadores: [
             { nome: 'ShadowAce',  champion: 'Caitlyn', lane: 'ADC', kills: 3, deaths: 6, assists: 4 },
             { nome: 'IronMage',   champion: 'Thresh',  lane: 'SUP', kills: 1, deaths: 5, assists: 9 },
             { nome: 'TopFrag',    champion: 'Garen',   lane: 'TOP', kills: 4, deaths: 7, assists: 3 },
             { nome: 'JungleBoss', champion: 'Lee Sin', lane: 'JNG', kills: 2, deaths: 8, assists: 6 },
             { nome: 'MidLord',    champion: 'Ahri',    lane: 'MID', kills: 5, deaths: 5, assists: 5 },
         ],
-        dano: [900, 1500, 2200, 3000, 4100, 5200, 6000, 6800, 7200, 7600],
+        dano: [900, 1500, 2200, 3000, 4100, 5200, 6000, 6800, 7200, 7600], */
     },
 ];
 let proximoId = 3;
@@ -194,22 +226,27 @@ function renderTabela() {
 
         const resClasse  = p.resultado === 'VITÓRIA' ? 'badge-vitoria'
                          : p.resultado === 'DERROTA' ? 'badge-derrota' : 'badge-empate';
-        const tipoClasse = p.tipo === 'TREINO' ? 'badge-treino'
-                         : p.tipo === 'RANKED' ? 'badge-ranked' : 'badge-amistoso';
 
         tr.innerHTML = `
             <td>${p.id}</td>
-            <td><span class="badge ${resClasse}">${p.resultado}</span></td>
-            <td>${p.mapa}</td>
-            <td><span class="pontos-num">${p.pontos}</span></td>
-            <td>${p.data}</td>
-            <td><span class="badge ${tipoClasse}">${p.tipo}</span></td>
-            <td>
-                <div class="cell-acoes">
-                    <button class="btn-icon" title="Ver detalhes" onclick="abrirPartida(${p.id})">open_in_new</button>
-                    <button class="btn-icon deletar" title="Excluir" onclick="excluirPartida(event,${p.id})">delete</button>
-                </div>
-            </td>
+        <td><span class="badge ${resClasse}">${p.resultado}</span></td>
+        <td>${p.abates}</td>
+        <td>${p.mortes}</td>
+        <td>${p.assistências}</td>
+        <td>${p.duração}</td>
+        <td>${p.dano}</td>
+        <td>${p.gold}</td>
+        <td>${p.barões}</td>
+        <td>${p.dragões}</td>
+        <td>${p.torres}</td>
+        <td>${p.pontos}</td>
+        <td>${p.data}</td>
+        <td>
+            <div class="cell-acoes">
+                <button class="btn-icon" onclick="abrirPartida(${p.id})">open_in_new</button>
+                <button class="btn-icon deletar" onclick="excluirPartida(event, ${p.id})">delete</button>
+            </div>
+        </td>
         `;
 
         tr.addEventListener('click', e => {
@@ -238,23 +275,19 @@ function cadastrarPartida() {
                 <option>EMPATE</option>
             </select>
         </td>
-        <td>
-            <select class="input-tabela" id="mapa-${novoId}">
-                <option>SUMM. RIFT</option>
-                <option>ARAM</option>
-                <option>TFT</option>
-                <option>ARENA</option>
-            </select>
-        </td>
-        <td><input class="input-tabela" id="pts-${novoId}" type="number" placeholder="0" min="0" style="width:60px"></td>
-        <td><input class="input-tabela" id="data-${novoId}" type="text" placeholder="DD/MM/AA"></td>
-        <td>
-            <select class="input-tabela" id="tipo-${novoId}">
-                <option>TREINO</option>
-                <option>RANKED</option>
-                <option>AMISTOSO</option>
-            </select>
-        </td>
+        
+        <td><input class="input-tabela" id="dur-${novoId}" type="text" placeholder="00:00" style="width:60px"></td>
+        <td><input class="input-tabela" id="aba-${novoId}" type="number" placeholder="0" min="0" style="width:50px"></td>
+        <td><input class="input-tabela" id="ast-${novoId}" type="number" placeholder="0" min="0" style="width:50px"></td>
+        <td><input class="input-tabela" id="mor-${novoId}" type="number" placeholder="0" min="0" style="width:50px"></td>
+        <td><input class="input-tabela" id="gld-${novoId}" type="text" placeholder="0.000" style="width:70px"></td>
+        <td><input class="input-tabela" id="dan-${novoId}" type="text" placeholder="0.000" style="width:70px"></td>
+        <td><input class="input-tabela" id="bar-${novoId}" type="number" placeholder="0" min="0" style="width:40px"></td>
+        <td><input class="input-tabela" id="dra-${novoId}" type="number" placeholder="0" min="0" style="width:40px"></td>
+        <td><input class="input-tabela" id="tor-${novoId}" type="number" placeholder="0" min="0" style="width:40px"></td>
+        <td><input class="input-tabela" id="pts-${novoId}" type="number" placeholder="0" min="0" style="width:50px"></td>
+        <td><input class="input-tabela" id="data-${novoId}" type="text" placeholder="DD/MM/AA" style="width:80px"></td>
+        
         <td>
             <div class="cell-acoes">
                 <button class="btn-icon" title="Salvar" onclick="salvarPartida(${novoId})">check_circle</button>
@@ -264,7 +297,8 @@ function cadastrarPartida() {
     `;
 
     tbody.insertBefore(tr, tbody.firstChild);
-    document.getElementById(`data-${novoId}`).focus();
+    // Foca no primeiro campo de input de texto após os selects
+    document.getElementById(`dur-${novoId}`).focus();
 }
 
 function salvarPartida(id) {
