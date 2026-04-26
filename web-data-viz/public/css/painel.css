@@ -167,7 +167,7 @@ body{
 }
 
 .legenda_topo3 {
-    color: #066B68;
+    color: #067572;
 }
 
 .container_user {
@@ -207,7 +207,7 @@ body{
 
 .kpi_text_container {
 /*     background-color: blueviolet; */
-    height: 60%;
+    height: 70%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -217,6 +217,8 @@ body{
 
 .kpi_title{
     font-size: 26px;
+    text-align: center;
+    line-height: 35px;
 }
 
 .data{
@@ -234,7 +236,7 @@ body{
 }
 
 .data2{
-    color: #066B68;
+    color: #067572;
 }
 
 
@@ -251,7 +253,7 @@ body{
 .container_graf_esq {
     width: 65%;
     height: 100%;
-    /* background-color: darkmagenta; */
+/*     background-color: darkmagenta; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -259,18 +261,28 @@ body{
 
 .container_graf1{
     width: 100%;
-    height: 48%;
-    /* background-color: darksalmon; */
+    height: 45%;
+ /*    background-color: #083132; */
+    border: solid 3px #083132;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+/*     background-color: darksalmon; */
 }
 
 .container_graf2{
     width: 100%;
-    height: 48%;
+    height: 50%;
 /*     background-color: darksalmon; */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
+/*     background-color: #083132; */
+    border: solid 3px #083132;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .container_grafico2_graf{
@@ -299,10 +311,19 @@ body{
 
 .container_graf_graf{
     height:100%;
-    width: 90%;
+    width: 95%;
 /*     background-color: aquamarine; */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: flex-end
+    align-items: flex-end;
+/*     background-color: #083132; */
+    border: solid 3px #083132;
+    padding-left: 10px;
+    padding-top: 5px;
+    
+}
+
+* {
+    box-sizing: border-box;
 }
