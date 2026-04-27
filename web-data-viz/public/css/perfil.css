@@ -102,7 +102,380 @@ body{
     gap: 10px;
 }
 
+/*A PARTIR DAQUI É CÓDIGO FORA DA SIDEBAR*/
+
+
 #container_principal{
     width: 80%;
     background-color: var(--cor-fundo);
+}
+
+#container_equipes{
+    padding: 40px 60px;
+    color: var(--cor-texto);
+}
+
+#header_equipes{
+    position: relative;
+}
+
+#header_equipes h1{
+    color: var(--cor-destaque);
+    letter-spacing: 3px;
+}
+
+#linha_header{
+    width: 100%;
+    height: 2px;
+    background-color: var(--cor-destaque);
+    margin: 10px 0 30px 0;
+}
+
+#topo_direita{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#avatar_usuario{
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--cor-destaque);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cor-destaque);
+}
+
+#btn_cadastrar{
+    background: transparent;
+    border: 2px solid var(--cor-destaque);
+    color: var(--cor-destaque);
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: "Goldman", sans-serif;
+}
+
+#btn_cadastrar:hover{
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+}
+
+/* LISTA */
+
+#lista_equipes{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.item_equipe{
+    display: grid;
+    grid-template-columns: 50px 50px 1fr 50px 200px;
+    align-items: center;
+    gap: 20px;
+}
+
+.numero{
+    font-size: 24px;
+    color: var(--cor-texto);
+}
+
+.icone{
+    font-size: 40px;
+    color: var(--cor-texto);
+}
+
+.nome{
+    color: var(--cor-texto);
+}
+
+.divisor{
+    width: 2px;
+    height: 30px;
+    background-color: var(--cor-texto);
+}
+
+.cargo{
+    color: var(--cor-texto);
+}
+
+/* ITEM CLICAVEL */
+
+.item_equipe{
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item_equipe:hover{
+    background-color: rgba(255,255,255,0.03);
+    transform: scale(1.01);
+}
+
+/* MODAL */
+
+#modalPerfil{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 80%;
+    height: 100vh;
+    background-color: var(--cor-fundo);
+    z-index: 999;
+    overflow: hidden;
+}
+
+
+/* BOX */
+
+#boxPerfil{
+    padding: 20px 28px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+
+/* X */
+
+#fecharModal{
+    position: absolute;
+    top: 16px;
+    right: 22px;
+    cursor: pointer;
+    color: var(--cor-destaque);
+    font-family: 'Material Symbols Outlined';
+    font-size: 24px;
+}
+
+
+/* TITULO */
+
+#boxPerfil h1{
+    color: var(--cor-destaque);
+    margin: 0;
+    font-size: 32px;
+}
+
+#linha_perfil{
+    width: 100%;
+    height: 2px;
+    background-color: var(--cor-destaque);
+    margin: 8px 0 18px;
+}
+
+
+/* TOPO PERFIL */
+
+#topo_perfil{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar_modal{
+    font-size: 60px;
+    color: white;
+}
+
+#topo_perfil h2{
+    color: white;
+    margin: 0;
+    font-size: 19px;
+}
+
+#topo_perfil p{
+    color: white;
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+
+/* CARDS */
+
+#cardsPerfil{
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+}
+
+.card_status{
+    width: 24%;
+    height: 75px;
+    background-color: var(--cor-fundo-escuro);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card_status p{
+    color: white;
+    font-size: 12px;
+    margin: 0;
+}
+
+.card_status h3{
+    color: var(--cor-destaque);
+    font-size: 21px;
+    margin-top: 6px;
+}
+
+
+/* GRAFICOS */
+
+#graficosPerfil{
+    margin-top: 22px;
+    display: flex;
+    gap: 18px;
+}
+
+.boxGrafico{
+    width: 48%;
+}
+
+.boxGrafico h4{
+    color: white;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+canvas{
+    width: 100% !important;
+    height: 250px !important;
+}
+
+/* MODAL CADASTRO */
+
+#modalCadastro{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 80%;
+    height: 100vh;
+    background-color: var(--cor-fundo);
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* BOX */
+
+#boxCadastro{
+    padding: 28px 38px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+
+/* TOPO */
+
+#topoCadastro{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#topoCadastro h1{
+    margin: 0;
+    color: var(--cor-destaque);
+    font-size: 34px;
+}
+
+
+/* AÇÕES */
+
+#acoesCadastro{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+/* BOTÃO */
+
+#btnEnviarCadastro{
+    background: transparent;
+    border: 2px solid var(--cor-destaque);
+    color: var(--cor-destaque);
+    padding: 10px 24px;
+    font-size: 15px;
+    font-family: "Goldman", sans-serif;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#btnEnviarCadastro:hover{
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+}
+
+
+/* X */
+
+#fecharCadastro{
+    position: static;
+    font-family: 'Material Symbols Outlined';
+    font-size: 34px;
+    color: var(--cor-destaque);
+    cursor: pointer;
+}
+
+
+/* LINHA */
+
+#linhaCadastro{
+    width: 100%;
+    height: 2px;
+    background-color: var(--cor-destaque);
+    margin: 12px 0 30px;
+}
+
+
+/* GRID */
+
+#gridCadastro{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 42px;
+}
+
+
+/* CAMPOS */
+
+.campo{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.campo label{
+    color: white;
+    font-size: 17px;
+}
+
+.campo input,
+.campo select{
+    height: 43px;
+    background-color: var(--cor-fundo-escuro);
+    border: none;
+    padding: 0 16px;
+    color: white;
+    font-family: "Goldman", sans-serif;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.campo input::placeholder{
+    color: var(--cor-icone);
+}
+
+.campo input[type="file"]{
+    padding-top: 10px;
 }

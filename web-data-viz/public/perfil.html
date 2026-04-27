@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
     <title>CodeNexus</title>
 
 </head>
+
 <body>
     <div id="sidebar" class="sidebar">
         <div id="container_titulo">
@@ -30,10 +32,10 @@
             </div>
             <div id="sub_container_partidas">
                 <span class="material-symbols-outlined">contract</span>
-                <a href="partidas.html"id="sub_container_partidas_a">PARTIDAS</a>
+                <a href="partidas.html" id="sub_container_partidas_a">PARTIDAS</a>
             </div>
             <div id="sub_container_forum">
-                <span class="material-symbols-outlined">forum</span>   
+                <span class="material-symbols-outlined">forum</span>
                 <a href="forum.html" id="sub_container_forum_a">FÓRUM</a>
             </div>
         </div>
@@ -47,12 +49,310 @@
     </div>
 
     <div id="container_principal">
-       <!-- digita o código aqui -->
-    </div>
-</body>
-</html>
-<script>
-    function sair(){
-        
-    }
-</script>
+        <div id="container_equipes">
+
+            <div id="header_equipes">
+                <h1>EQUIPE</h1>
+                <div id="linha_header"></div>
+
+                <div id="topo_direita">
+                    <div id="avatar_usuario">M</div>
+                    <button id="btn_cadastrar" onclick="abrirCadastro()">CADASTRAR +</button>
+                </div>
+            </div>
+
+            <div id="lista_equipes">
+
+                <div class="item_equipe" onclick="abrirPerfil()">
+                    <span class="numero">1</span>
+                    <span class="material-symbols-outlined icone">person</span>
+                    <span class="nome">Marina Okamoto / hitotsumenokado</span>
+                    <div class="divisor"></div>
+                    <span class="cargo">Suporte</span>
+                </div>
+
+                <div class="item_equipe" onclick="abrirPerfil()">
+                    <span class="numero">2</span>
+                    <span class="material-symbols-outlined icone">person</span>
+                    <span class="nome">João Silva / jhonzera</span>
+                    <div class="divisor"></div>
+                    <span class="cargo">ADC</span>
+                </div>
+
+            </div>
+
+            <!-- MODAL PERFIL -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <div id="modalPerfil">
+
+                <div id="boxPerfil">
+
+                    <span id="fecharModal" onclick="fecharPerfil()">close</span>
+
+                    <h1>PERFIL DO JOGADOR</h1>
+
+                    <div id="linha_perfil"></div>
+
+                    <!-- TOPO PERFIL -->
+                    <div id="topo_perfil">
+
+                        <span class="material-symbols-outlined avatar_modal">person</span>
+
+                        <div>
+                            <h2>Marina Okamoto / hitotsumenokado</h2>
+                            <p>Suporte / ADC</p>
+                        </div>
+
+                    </div>
+
+                    <!-- CARDS -->
+                    <div id="cardsPerfil">
+
+                        <div class="card_status">
+                            <p>VITÓRIAS</p>
+                            <h3>72</h3>
+                        </div>
+
+                        <div class="card_status">
+                            <p>DERROTAS</p>
+                            <h3>29</h3>
+                        </div>
+
+                        <div class="card_status">
+                            <p>KDA</p>
+                            <h3>4.9</h3>
+                        </div>
+
+                        <div class="card_status">
+                            <p>WINRATE</p>
+                            <h3>71%</h3>
+                        </div>
+
+                    </div>
+
+                    <!-- GRAFICOS -->
+                    <div id="graficosPerfil">
+
+                        <div class="boxGrafico">
+                            <h4>VITÓRIAS POR MÊS:</h4>
+                            <canvas id="graficoLinha"></canvas>
+                        </div>
+
+                        <div class="boxGrafico">
+                            <h4>CHAMPIONS MAIS PICKADOS:</h4>
+                            <canvas id="graficoBarra"></canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- MODAL CADASTRO -->
+            <div id="modalCadastro">
+
+                <div id="boxCadastro">
+
+                    <div id="topoCadastro">
+
+                        <h1>EQUIPE | CADASTRO</h1>
+
+                        <div id="acoesCadastro">
+                            <button id="btnEnviarCadastro">CONCLUIR</button>
+                            <span id="fecharCadastro" onclick="fecharCadastro()">close</span>
+                        </div>
+
+                    </div>
+
+                    <div id="linhaCadastro"></div>
+
+
+                    <div id="gridCadastro">
+
+                        <div class="campo">
+                            <label>NOME:</label>
+                            <input type="text" placeholder="Insira o nome">
+                        </div>
+
+                        <div class="campo">
+                            <label>NICKNAME:</label>
+                            <input type="text" placeholder="Insira o nickname">
+                        </div>
+
+                        <div class="campo">
+                            <label>EMAIL:</label>
+                            <input type="text" placeholder="Insira o email">
+                        </div>
+
+                        <div class="campo">
+                            <label>TELEFONE:</label>
+                            <input type="text" placeholder="(--) ---------">
+                        </div>
+
+                        <div class="campo">
+                            <label>PAÍS:</label>
+                            <select>
+                                <option>Selecione uma opção</option>
+                                <option>Brasil</option>
+                                <option>Japão</option>
+                                <option>Coreia</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label>DATA FINAL DO CONTRATO:</label>
+                            <input type="text" placeholder="DD/MM/AAAA">
+                        </div>
+
+                        <div class="campo">
+                            <label>FUNÇÃO:</label>
+                            <input type="text" placeholder="Insira a função">
+                        </div>
+
+                        <div class="campo">
+                            <label>FOTO DE PERFIL:</label>
+                            <input type="file">
+                        </div>
+
+                        <div class="campo">
+                            <label>ELO ATUAL:</label>
+                            <select>
+                                <option>Selecione uma opção</option>
+                                <option>Bronze</option>
+                                <option>Prata</option>
+                                <option>Ouro</option>
+                                <option>Platina</option>
+                                <option>Diamante</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label>STATUS:</label>
+                            <select>
+                                <option>Selecione uma opção</option>
+                                <option>Ativo</option>
+                                <option>Reserva</option>
+                                <option>Inativo</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+            <script>
+                function abrirPerfil() {
+                    document.getElementById("modalPerfil").style.display = "block";
+                    criarGraficos();
+                }
+
+                function fecharPerfil() {
+                    document.getElementById("modalPerfil").style.display = "none";
+                }
+
+                function abrirCadastro() {
+                    document.getElementById("modalCadastro").style.display = "block";
+                }
+
+                function fecharCadastro() {
+                    document.getElementById("modalCadastro").style.display = "none";
+                }
+
+                function criarGraficos() {
+
+                    if (window.grafico1) window.grafico1.destroy();
+                    if (window.grafico2) window.grafico2.destroy();
+
+
+                    const ctx1 = document.getElementById('graficoLinha');
+
+                    window.grafico1 = new Chart(ctx1, {
+                        type: 'line',
+                        data: {
+                            labels: ['0', '1', '2', '3', '4'],
+                            datasets: [
+                                {
+                                    data: [50, 190, 120, 210, 130],
+                                    borderColor: '#00ffff',
+                                    borderWidth: 2,
+                                    tension: 0
+                                },
+                                {
+                                    data: [130, 40, 200, 220, 180],
+                                    borderColor: '#F2FF58',
+                                    borderWidth: 2,
+                                    tension: 0
+                                }
+                            ]
+                        },
+                        options: {
+                            plugins: { legend: { display: false } },
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    ticks: { color: 'white' },
+                                    grid: { color: 'rgba(255,255,255,0.3)' }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    max: 250,
+                                    ticks: {
+                                        color: 'white',
+                                        stepSize: 50
+                                    },
+                                    grid: {
+                                        color: 'rgba(255,255,255,0.3)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+
+
+                    const ctx2 = document.getElementById('graficoBarra');
+
+                    window.grafico2 = new Chart(ctx2, {
+                        type: 'bar',
+                        data: {
+                            labels: ['0', '1', '2', '3', '4'],
+                            datasets: [{
+                                data: [350, 200, 850, 650, 980],
+                                backgroundColor: '#f0b90b'
+                            }]
+                        },
+                        options: {
+                            plugins: { legend: { display: false } },
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    ticks: { color: 'white' },
+                                    grid: { color: 'rgba(255,255,255,0.3)' }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    max: 1000,
+                                    ticks: {
+                                        color: 'white',
+                                        stepSize: 250
+                                    },
+                                    grid: {
+                                        color: 'rgba(255,255,255,0.3)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                }
+            </script>
