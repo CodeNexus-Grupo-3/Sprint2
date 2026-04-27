@@ -4,7 +4,6 @@ import school.sptech.model.Dados;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ETLService {
@@ -23,28 +22,23 @@ public class ETLService {
 
     public void executar() {
         // EXTRACT (S3)
-//        logService.sucesso("INFO", "Extração de dados do S3 iniciada", "ETLService");
-//
-//        String nomeBucket = "s3-codenexus";
-//
-//        List<S3Object> listaObjetos = extractService.listarObjetos(nomeBucket);
-//
-//        if (listaObjetos.isEmpty()) {
-//            logService.sucesso("INFO", "Nenhum arquivo para extração", "ETLService");
-//            return;
-//        }
-//
-//        List<File> arquivos = extractService.extrairObjetos(listaObjetos, nomeBucket);
-//
-//        logService.sucesso("SUCESSO", "Extração de Dados Concluída (1/3)", "ETLService");
+        logService.sucesso("INFO", "Extração de dados do S3 iniciada", "ETLService");
+
+        String nomeBucket = "s3-codenexus";
+
+        List<S3Object> listaObjetos = extractService.listarObjetos(nomeBucket);
+
+        if (listaObjetos.isEmpty()) {
+            logService.sucesso("INFO", "Nenhum arquivo para extração", "ETLService");
+            return;
+        }
+
+        List<File> arquivos = extractService.extrairObjetos(listaObjetos, nomeBucket);
+
+        logService.sucesso("SUCESSO", "Extração de Dados Concluída (1/3)", "ETLService");
 
         // TRANSFORM (Apache POI)
         logService.sucesso("INFO", "Transformação de dados via Apache POI iniciada", "ETLService");
-
-        // Isso aqui vai ser deletado posteriormente
-        File pasta = new File("ArquivosS3");
-        List<File> arquivos = List.of(pasta.listFiles());
-        // Isso aqui vai ser deletado posteriormente
 
         if (arquivos.isEmpty()) {
             logService.sucesso("INFO", "Nenhum arquivo para transformação", "ETLService");
