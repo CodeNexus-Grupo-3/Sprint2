@@ -24,7 +24,7 @@ public class ETLService {
         // EXTRACT (S3)
         logService.sucesso("INFO", "Extração de dados do S3 iniciada", "ETLService");
 
-        String nomeBucket = "s3-codenexus";
+        String nomeBucket = "codenexus";
 
         List<S3Object> listaObjetos = extractService.listarObjetos(nomeBucket);
 
