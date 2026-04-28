@@ -1,10 +1,10 @@
 package school.sptech.service;
 
-import com.monitorjbl.xlsx.StreamingReader;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import school.sptech.model.Dados;
 
 import java.io.File;
@@ -60,10 +60,7 @@ public class TransformService {
 
         try (
                 InputStream arquivo = new FileInputStream(caminhoArquivo);
-                Workbook workbook = StreamingReader.builder()
-                        .rowCacheSize(100)
-                        .bufferSize(4096)
-                        .open(arquivo);
+                Workbook workbook = new XSSFWorkbook(arquivo)
         ) {
             Sheet sheet = workbook.getSheetAt(0);
             for (Row row : sheet) {
