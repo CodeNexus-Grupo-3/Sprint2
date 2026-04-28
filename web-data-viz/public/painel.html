@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
     <title>CodeNexus</title>
 
 </head>
+
 <body>
     <div id="sidebar" class="sidebar">
         <div id="container_titulo">
@@ -29,14 +31,14 @@
             </div>
             <div id="sub_container_perfil">
                 <span class="material-symbols-outlined">person</span>
-                <a href="perfil.html" id="sub_container_perfil_a">JOGADOR</a>
+                <a href="jogador.html" id="sub_container_perfil_a">JOGADOR</a>
             </div>
             <div id="sub_container_partidas">
                 <span class="material-symbols-outlined">contract</span>
-                <a href="partidas.html"id="sub_container_partidas_a">PARTIDAS</a>
+                <a href="partidas.html" id="sub_container_partidas_a">PARTIDAS</a>
             </div>
             <div id="sub_container_forum">
-                <span class="material-symbols-outlined">forum</span>   
+                <span class="material-symbols-outlined">forum</span>
                 <a href="forum.html" id="sub_container_forum_a">FÓRUM</a>
             </div>
         </div>
@@ -52,7 +54,7 @@
     <div id="container_principal">
         <div class="container_titulo_pag">
             <span class="titulo_pag">PAINEL COMPARATIVO DE DESEMPENHO MÉDIO</span>
-            
+
             <div class="topo_esq">
                 <div class="container_legenda_topo">
                     <span class="legenda_topo1">time</span>
@@ -77,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="kpi">
                 <div class="kpi_text_container">
                     <span class="kpi_title">DANO POR <br>MINUTO</span>
@@ -89,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="kpi">
                 <div class="kpi_text_container">
                     <span class="kpi_title">ÍNDICE DE<br>TANK</span>
@@ -101,7 +103,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="kpi">
                 <div class="kpi_text_container">
                     <span class="kpi_title">GOLD POR<BR>MINUTO</span>
@@ -113,7 +115,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="kpi">
                 <div class="kpi_text_container">
                     <span class="kpi_title">EFICIÊNCIA DE <BR>GOLD</span>
@@ -151,8 +153,14 @@
     </div>
 
 </body>
+
 </html>
 <script>
+    function sair() {
+        sessionStorage.clear();
+        window.location = "index.html";
+    }
+
     const ctx = document.getElementById('grafico');
     Chart.defaults.font.family = 'Goldman';
 
@@ -226,148 +234,146 @@
 
     const ctxy = document.getElementById('grafico2').getContext('2d');
 
-  const data = {
-    labels: ['Gold', 'Dano', 'Tank'], // As 3 fileiras
-    datasets: [
-      {
-        label: 'Time',
-        // Valores negativos para crescerem à esquerda
-        data: [-59426, -79531, -60324], 
-        borderColor: '#e6f14a',
-        borderWidth: 1,
-        backgroundColor: '#e6f14a60',
-        borderSkipped: false,
-      },
-      {
-        label: 'Geral',
-        // Valores positivos para crescerem à direita
-        data: [71245, 75817, 85288],
-        borderColor: '#1f7a73',
-        borderWidth: 1,
-        backgroundColor: '#1f7a7350',
-        borderSkipped: false,
-      }
-    ]
-  };
-
-  new Chart(ctxy, {
-    type: 'bar',
-    data: data,
-    options: {
-      indexAxis: 'y', // Inverte para barras horizontais
-      responsive: true,
-      maintainAspectRatio: false,
-      
-      scales: {
-        x: {
-          stacked: true, // Crucial para o efeito de divergência
-          min: -100000,
-          max: 100000,
-          grid: {
-            color: '#eeeeee33',
-          },
-          ticks: {
-            // Remove o sinal negativo dos números no eixo X
-            color: '#ffffff',
-            callback: (value) => Math.abs(value) 
-          }
-        },
-        y: {
-          stacked: true,
-          grid: {
-            display: false // Limpa o fundo atrás das barras
-          },
-          ticks: {
-            color: '#ffffff',
-            crossAlign: 'left',
-            font: {
-                size: 20,
-                weight: '300',
+    const data = {
+        labels: ['Gold', 'Dano', 'Tank'], // As 3 fileiras
+        datasets: [
+            {
+                label: 'Time',
+                // Valores negativos para crescerem à esquerda
+                data: [-59426, -79531, -60324],
+                borderColor: '#e6f14a',
+                borderWidth: 1,
+                backgroundColor: '#e6f14a60',
+                borderSkipped: false,
             },
-            
-          }
-        }
-      },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            // Remove o sinal negativo do balão de informação (hover)
-            label: (context) => {
-              const label = context.dataset.label || '';
-              const value = Math.abs(context.raw);
-              return `${label}: ${value}`;
+            {
+                label: 'Geral',
+                // Valores positivos para crescerem à direita
+                data: [71245, 75817, 85288],
+                borderColor: '#1f7a73',
+                borderWidth: 1,
+                backgroundColor: '#1f7a7350',
+                borderSkipped: false,
             }
-          }
-        },
-        legend: {
-         display: false,
+        ]
+    };
+
+    new Chart(ctxy, {
+        type: 'bar',
+        data: data,
+        options: {
+            indexAxis: 'y', // Inverte para barras horizontais
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                x: {
+                    stacked: true, // Crucial para o efeito de divergência
+                    min: -100000,
+                    max: 100000,
+                    grid: {
+                        color: '#eeeeee33',
+                    },
+                    ticks: {
+                        // Remove o sinal negativo dos números no eixo X
+                        color: '#ffffff',
+                        callback: (value) => Math.abs(value)
+                    }
+                },
+                y: {
+                    stacked: true,
+                    grid: {
+                        display: false // Limpa o fundo atrás das barras
+                    },
+                    ticks: {
+                        color: '#ffffff',
+                        crossAlign: 'left',
+                        font: {
+                            size: 20,
+                            weight: '300',
+                        },
+
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        // Remove o sinal negativo do balão de informação (hover)
+                        label: (context) => {
+                            const label = context.dataset.label || '';
+                            const value = Math.abs(context.raw);
+                            return `${label}: ${value}`;
+                        }
+                    }
+                },
+                legend: {
+                    display: false,
+                }
+            }
         }
-      }
-    }
-  });
+    });
 
-   const ctxyz = document.getElementById('grafico1').getContext('2d');
+    const ctxyz = document.getElementById('grafico1').getContext('2d');
 
-  const dataArea = {
-    labels: ['Abates', 'Assistências', 'Mortes'],
-    datasets: [
-      {
-        label: 'time',
-        data: [27, 15, 11],
-        borderColor: '#F2FF58',
-        backgroundColor: 'rgba(242, 255, 88, 0.4)', // Amarelo com transparência
-        fill: true,
-        tension: 0.3 // Deixa as linhas levemente curvas
-      },
-      {
-        label: 'geral',
-        data: [23, 40, 16],
-        borderColor: '#066B68',
-        backgroundColor: 'rgba(6, 107, 104, 0.6)', // Verde com transparência
-        fill: true,
-        tension: 0.3
-      }
-    ]
-  };
+    const dataArea = {
+        labels: ['Abates', 'Assistências', 'Mortes'],
+        datasets: [
+            {
+                label: 'time',
+                data: [27, 15, 11],
+                borderColor: '#F2FF58',
+                backgroundColor: 'rgba(242, 255, 88, 0.4)', // Amarelo com transparência
+                fill: true,
+                tension: 0.3 // Deixa as linhas levemente curvas
+            },
+            {
+                label: 'geral',
+                data: [23, 40, 16],
+                borderColor: '#066B68',
+                backgroundColor: 'rgba(6, 107, 104, 0.6)', // Verde com transparência
+                fill: true,
+                tension: 0.3
+            }
+        ]
+    };
 
-  new Chart(ctxyz, {
-    type: 'line',
-    data: dataArea,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-            display: false,
-          labels: { color: '#ffffff' } // Legenda em branco para fundo escuro
+    new Chart(ctxyz, {
+        type: 'line',
+        data: dataArea,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                    labels: { color: '#ffffff' } // Legenda em branco para fundo escuro
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: {
+                        color: '#ffffff',
+                        padding: 10,
+                        font: {
+                            size: 20,
+                            weight: '300',
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: {
+                        padding: 10,
+                        color: '#ffffff',
+                    }
+                }
+            }
         }
-      },
-      scales: {
-        x: {
-          grid: { color: 'rgba(255, 255, 255, 0.1)' },
-          ticks: { 
-            color: '#ffffff',
-            padding: 10,
-            font: {
-                size: 20,
-                weight: '300',
-            } 
-        }
-        },
-        y: {
-          beginAtZero: true,
-          grid: { color: 'rgba(255, 255, 255, 0.1)' },
-          ticks: { 
-            padding: 10,
-            color: '#ffffff',
-          }
-        }
-      }
-    }
-  });
+    });
 
 
-    function sair(){
-        
-    }
+
 </script>

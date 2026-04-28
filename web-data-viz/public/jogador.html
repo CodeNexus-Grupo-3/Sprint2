@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
-    <link rel="stylesheet" href="./css/perfil.css">
+    <link rel="stylesheet" href="./css/jogador.css">
     <title>CodeNexus</title>
 
 </head>
@@ -28,7 +28,7 @@
             </div>
             <div id="sub_container_perfil">
                 <span class="material-symbols-outlined">person</span>
-                <a href="perfil.html" id="sub_container_perfil_a">JOGADOR</a>
+                <a href="jogador.html" id="sub_container_perfil_a">JOGADOR</a>
             </div>
             <div id="sub_container_partidas">
                 <span class="material-symbols-outlined">contract</span>
@@ -235,6 +235,11 @@
 
 
             <script>
+                function sair() {
+                    sessionStorage.clear();
+                    window.location = "index.html";
+                }
+
                 function abrirPerfil() {
                     document.getElementById("modalPerfil").style.display = "block";
                     criarGraficos();

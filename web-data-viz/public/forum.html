@@ -26,7 +26,7 @@
             </div>
             <div id="sub_container_perfil">
                 <span class="material-symbols-outlined">person</span>
-                <a href="perfil.html" id="sub_container_perfil_a">JOGADOR</a>
+                <a href="jogador.html" id="sub_container_perfil_a">JOGADOR</a>
             </div>
             <div id="sub_container_partidas">
                 <span class="material-symbols-outlined">contract</span>
@@ -103,8 +103,9 @@
 </body>
 </html>
 <script>
-    function sair(){
-        
+   function sair() {
+        sessionStorage.clear();
+        window.location = "index.html";
     }
 
 
