@@ -15,7 +15,11 @@ public class DBConnectionProvider {
         String host = System.getenv("DB_HOST");
         String db = System.getenv("DB_NAME");
         String user = System.getenv("DB_USER");
-        String pass = System.getenv("DB_PASS");
+        String pass = System.getenv("DB_PASSWORD");
+
+        if (host == null || db == null || user == null || pass == null) {
+            throw new RuntimeException("Variáveis de ambiente do banco não configuradas corretamente");
+        }
 
         basicDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         basicDataSource.setUrl("jdbc:mysql://" + host + ":3306/" + db + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");

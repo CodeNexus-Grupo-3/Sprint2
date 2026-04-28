@@ -14,8 +14,14 @@ public class S3Provider {
     }
 
     public S3Client getS3Client() {
+        String region = System.getenv("AWS_REGION");
+
+        if (region == null) {
+            throw new RuntimeException("AWS_REGION não definida");
+        }
+
         return S3Client.builder()
-                .region(Region.US_EAST_1)
+                .region(Region.of(region))
                 .credentialsProvider(credentials)
                 .build();
     }
