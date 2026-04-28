@@ -13,7 +13,8 @@ public class ETLService {
     private final LoadService loadService;
     private final LogService logService;
 
-    public ETLService(ExtractService extractService, TransformService transformService, LoadService loadService, LogService logService) {
+    public ETLService(ExtractService extractService, TransformService transformService, LoadService loadService,
+            LogService logService) {
         this.extractService = extractService;
         this.transformService = transformService;
         this.loadService = loadService;
@@ -45,17 +46,16 @@ public class ETLService {
             return;
         }
 
-        List<Dados> dados = transformService.lerArquivos(arquivos);
-
-        logService.sucesso("SUCESSO", "Transformação de Dados Concluída (2/3)", "ETLService");
-
-        // LOAD (JDBC)
-        logService.sucesso("INFO", "Inserção no banco iniciada", "ETLService");
         try {
-            loadService.save(dados);
-            logService.sucesso("SUCESSO", "Carregamento de Dados Concluído (3/3)", "ETLService");
+            loadService.clean();
+            transformService.processarArquivos(arquivos, loadService);
+            logService.sucesso("SUCESSO", "ETL finalizado com sucesso (2/3 + 3/3)", "ETLService");
         } catch (Exception e) {
-            logService.erro("ERRO", "Erro na etapa de inserção de dados", "ETLService", e.getMessage(), e.toString());
+            logService.erro("ERRO",
+                    "Erro durante transformação/carga",
+                    "ETLService",
+                    e.getMessage(),
+                    e.toString());
         }
     }
 }

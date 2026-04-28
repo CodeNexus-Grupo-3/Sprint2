@@ -24,128 +24,120 @@ public class TransformService {
         this.logService = logService;
     }
 
-    // Leitura dos Arquivos Extraídos do Bucket
-    public List<Dados> lerArquivos(List<File> arquivos) {
+    public void processarArquivos(List<File> arquivos, LoadService loadService) {
 
-        logService.sucesso("INFO", "Tratativa dos Dados iniciada", "TransformService");
-
-        List<Dados> dados = new ArrayList<>();
-
-        for (File file : arquivos) {
-            if (!file.getName().endsWith(".xlsx")) {
-                continue;
-            }
-
-            logService.sucesso("INFO", "Processando arquivo: " + file.getName(), "TransformService");
-
-            try {
-                dados.addAll(extrairDataset(file.getPath()));
-                logService.sucesso("SUCESSO", "Arquivo " + file.getName() + " processado com sucesso", "TransformService");
-            } catch (Exception e) {
-                logService.erro("ERRO", "Erro ao processar arquivo: " + file.getName(), "TransformService", e.getMessage(), e.toString());
-            }
-        }
-
-        logService.sucesso("SUCESSO", "Dados tratados com sucesso", "TransformService");
-
-        return dados;
-    }
-
-    // Extração dos dados dos Arquivos listados
-    private List<Dados> extrairDataset(String caminhoArquivo) {
-        logService.sucesso("INFO", "Iniciando a extração de dados do arquivo " + caminhoArquivo, "TransformService");
-
-        List<Dados> dadosExtraidos = new ArrayList<>();
+        List<Dados> batch = new ArrayList<>();
+        int batchSize = 500;
         DataFormatter formatter = new DataFormatter();
 
-        try (
-                InputStream arquivo = new FileInputStream(caminhoArquivo);
-                Workbook workbook = new XSSFWorkbook(arquivo)
-        ) {
-            Sheet sheet = workbook.getSheetAt(0);
-            for (Row row : sheet) {
-                if (row.getRowNum() == 0) {
-                    continue;
+        for (File file : arquivos) {
+
+            if (!file.getName().endsWith(".xlsx"))
+                continue;
+
+            try (InputStream arquivo = new FileInputStream(file);
+                    Workbook workbook = new XSSFWorkbook(arquivo)) {
+
+                Sheet sheet = workbook.getSheetAt(0);
+
+                for (Row row : sheet) {
+
+                    if (row.getRowNum() == 0)
+                        continue;
+
+                    Dados dado = construirDado(row, formatter);
+
+                    if (dado == null)
+                        continue;
+
+                    batch.add(dado);
+
+                    if (batch.size() >= batchSize) {
+                        loadService.save(batch);
+                        batch.clear();
+                    }
                 }
 
-                // Formatando a Duração
-                Integer duracao;
-                try {
-                    String duracaoString = formatter.formatCellValue(row.getCell(0));
-                    String[] partes = duracaoString.split(":");
-                    duracao = Integer.parseInt(partes[0]) * 60 + Integer.parseInt(partes[1]);
-                }
-                catch (Exception e) {
-                    logService.erro("ERRO", "Erro ao converter duração na linha " + row.getRowNum(), "TransformService", e.getMessage(), e.toString());
-                    continue;
-                }
-
-                String vitoria = formatter.formatCellValue(row.getCell(1));
-                String time1 = formatter.formatCellValue(row.getCell(2));
-                String time2 = formatter.formatCellValue(row.getCell(6));
-                Integer totalBaron;
-                Integer totalDrag;
-                Integer totalTorres;
-                Integer totalAbates;
-                Integer totalMortes;
-                Integer totalAssistencias;
-                Integer totalGold;
-                Integer totalDano;
-
-                if (vitoria.equals(time1)) {
-                    totalBaron = getInteger(row, 3);
-                    totalDrag = getInteger(row, 4);
-                    totalTorres = getInteger(row, 5);
-                    totalAbates = soma(row, 10);
-                    totalMortes = soma(row, 11);
-                    totalAssistencias = soma(row, 12);
-                    totalGold = soma(row, 13);
-                    totalDano = soma(row, 14);
-                }
-                else if (vitoria.equals(time2)) {
-                    totalBaron = getInteger(row, 7);
-                    totalDrag = getInteger(row, 8);
-                    totalTorres = getInteger(row, 9);
-                    totalAbates = soma(row, 35);
-                    totalMortes = soma(row, 36);
-                    totalAssistencias = soma(row, 37);
-                    totalGold = soma(row, 38);
-                    totalDano = soma(row, 39);
-                }
-                else {
-                    logService.erro("ERRO", "Linha inválida (vitória não bate) - linha " + row.getRowNum(), "TransformService", "Valor de vitória não corresponde a nenhum time", null);
-                    continue;
-                }
-
-                Dados dado = new Dados(
-                        duracao,
-                        totalBaron,
-                        totalDrag,
-                        totalTorres,
-                        totalAbates,
-                        totalMortes,
-                        totalAssistencias,
-                        totalGold,
-                        totalDano
-                );
-
-                dadosExtraidos.add(dado);
+            } catch (Exception e) {
+                logService.erro("ERRO", "Erro ao processar arquivo", "TransformService",
+                        e.getMessage(), e.toString());
             }
-
-        } catch (IOException e) {
-            logService.erro("ERRO", "Erro ao ler arquivo: " + caminhoArquivo, "TransformService", e.getMessage(), e.toString());
-            return dadosExtraidos;
         }
-        return dadosExtraidos;
+
+        if (!batch.isEmpty()) {
+            loadService.save(batch);
+        }
+    }
+
+    private Dados construirDado(Row row, DataFormatter formatter) {
+
+        Integer duracao;
+        try {
+            String duracaoString = formatter.formatCellValue(row.getCell(0));
+            String[] partes = duracaoString.split(":");
+            duracao = Integer.parseInt(partes[0]) * 60 + Integer.parseInt(partes[1]);
+        } catch (Exception e) {
+            return null;
+        }
+
+        String vitoria = formatter.formatCellValue(row.getCell(1));
+        String time1 = formatter.formatCellValue(row.getCell(2));
+        String time2 = formatter.formatCellValue(row.getCell(6));
+
+        Integer totalBaron;
+        Integer totalDrag;
+        Integer totalTorres;
+        Integer totalAbates;
+        Integer totalMortes;
+        Integer totalAssistencias;
+        Integer totalGold;
+        Integer totalDano;
+
+        if (vitoria.equals(time1)) {
+            totalBaron = getInteger(row, 3);
+            totalDrag = getInteger(row, 4);
+            totalTorres = getInteger(row, 5);
+            totalAbates = soma(row, 10);
+            totalMortes = soma(row, 11);
+            totalAssistencias = soma(row, 12);
+            totalGold = soma(row, 13);
+            totalDano = soma(row, 14);
+
+        } else if (vitoria.equals(time2)) {
+            totalBaron = getInteger(row, 7);
+            totalDrag = getInteger(row, 8);
+            totalTorres = getInteger(row, 9);
+            totalAbates = soma(row, 35);
+            totalMortes = soma(row, 36);
+            totalAssistencias = soma(row, 37);
+            totalGold = soma(row, 38);
+            totalDano = soma(row, 39);
+
+        } else {
+            return null;
+        }
+
+        return new Dados(
+                duracao,
+                totalBaron,
+                totalDrag,
+                totalTorres,
+                totalAbates,
+                totalMortes,
+                totalAssistencias,
+                totalGold,
+                totalDano);
     }
 
     // Casting de valores Double para Integer
     private Integer getInteger(Row row, Integer cell) {
         try {
-            if (row.getCell(cell) == null) return 0;
+            if (row.getCell(cell) == null)
+                return 0;
             return (int) row.getCell(cell).getNumericCellValue();
         } catch (Exception e) {
-            logService.erro("ERRO", "Erro ao ler célula " + cell + " na linha " + row.getRowNum(), "TransformService", e.getMessage(), null);
+            logService.erro("ERRO", "Erro ao ler célula " + cell + " na linha " + row.getRowNum(), "TransformService",
+                    e.getMessage(), null);
             return 0;
         }
     }

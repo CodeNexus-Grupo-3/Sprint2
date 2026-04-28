@@ -17,32 +17,24 @@ public class LoadService {
     }
 
     public void save(List<Dados> dados) {
+
         if (dados == null || dados.isEmpty()) {
-            logService.sucesso("INFO", "Nenhum dado para inserir", "LoadService");
             return;
         }
 
-        logService.sucesso("INFO", "Iniciando inserção de " + dados.size() + " registros", "LoadService");
+        String sql = "INSERT INTO Dashboard VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        for (Dados dado : dados) {
-            try {
-                jdbcTemplate.update(
-                        "INSERT INTO Dashboard VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                        dado.getDuracao(),
-                        dado.getTotalBaron(),
-                        dado.getTotalDrag(),
-                        dado.getTotalTorres(),
-                        dado.getTotalAbates(),
-                        dado.getTotalMortes(),
-                        dado.getTotalAssistencias(),
-                        dado.getTotalGold(),
-                        dado.getTotalDano());
-            } catch (DataAccessException e) {
-                logService.erro("ERRO", "Erro ao inserir dados no banco", "LoadService", e.getMessage(), e.toString());
-            }
-        }
-
-        logService.sucesso("SUCESSO", "Dados inseridos com sucesso", "LoadService");
+        jdbcTemplate.batchUpdate(sql, dados, dados.size(), (ps, dado) -> {
+            ps.setInt(1, dado.getDuracao());
+            ps.setInt(2, dado.getTotalBaron());
+            ps.setInt(3, dado.getTotalDrag());
+            ps.setInt(4, dado.getTotalTorres());
+            ps.setInt(5, dado.getTotalAbates());
+            ps.setInt(6, dado.getTotalMortes());
+            ps.setInt(7, dado.getTotalAssistencias());
+            ps.setInt(8, dado.getTotalGold());
+            ps.setInt(9, dado.getTotalDano());
+        });
     }
 
     public void clean() {
