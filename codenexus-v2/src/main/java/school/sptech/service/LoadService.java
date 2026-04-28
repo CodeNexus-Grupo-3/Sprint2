@@ -44,4 +44,17 @@ public class LoadService {
 
         logService.sucesso("SUCESSO", "Dados inseridos com sucesso", "LoadService");
     }
+
+    public void clean() {
+        try {
+            logService.sucesso("INFO", "Iniciando limpeza da tabela Dashboard", "LoadService");
+
+            jdbcTemplate.execute("TRUNCATE TABLE Dashboard");
+
+            logService.sucesso("SUCESSO", "Tabela limpa com sucesso", "LoadService");
+
+        } catch (DataAccessException e) {
+            logService.erro("ERRO", "Erro ao limpar tabela", "LoadService", e.getMessage(), e.toString());
+        }
+    }
 }
