@@ -1,0 +1,55 @@
+# =====================
+# 🔐 ENV (NUNCA VERSIONAR)
+# =====================
+.env
+.env.*
+!.env.example
+
+# =====================
+# 🟢 NODE (web-data-viz)
+# =====================
+web-data-viz/node_modules/
+web-data-viz/package-lock.json
+web-data-viz/dist/
+
+# =====================
+# ☕ JAVA (codenexus-v2)
+# =====================
+codenexus-v2/target/
+!codenexus-v2/.mvn/wrapper/maven-wrapper.jar
+
+# =====================
+# 🧠 IDEs
+# =====================
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+
+# VS Code
+.vscode/
+
+# =====================
+# 🛠️ BUILD / OUTROS
+# =====================
+build/
+dist/
+out/
+
+# =====================
+# 🍎 SISTEMA
+# =====================
+.DS_Store
+
+# =====================
+# 📄 LOGS
+# =====================
+*.log
