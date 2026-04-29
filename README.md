@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/27209755/README.md)
 # 🚀 CodeNexus — Sprint 2
 
 > Segunda versão do projeto **CodeNexus**, desenvolvida em grupo pelos membros da startup. Este repositório contempla os entregáveis da Sprint 2, com evolução significativa em relação ao Sprint 1: inclusão de backend Java, banco de dados containerizado e visualização de dados aprimorada.
