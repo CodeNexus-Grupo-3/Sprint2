@@ -10,7 +10,6 @@
 - [Estrutura do Repositório](#-estrutura-do-repositório)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Pré-requisitos](#-pré-requisitos)
-- [Como Executar](#-como-executar)
 - [Módulos](#-módulos)
   - [codenexus-v2](#codenexus-v2)
   - [mysql](#mysql)
