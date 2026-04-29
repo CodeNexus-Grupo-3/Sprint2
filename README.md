@@ -69,45 +69,6 @@ Antes de executar o projeto, certifique-se de ter instalado:
 
 ---
 
-## ▶️ Como Executar
-
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/CodeNexus-Grupo-3/Sprint2.git
-cd Sprint2
-```
-
-### 2. Suba o banco de dados com Docker
-
-```bash
-cd mysql
-docker compose up -d
-```
-
-### 3. Execute o backend Java
-
-```bash
-cd ../codenexus-v2
-./mvnw spring-boot:run
-# ou
-mvn spring-boot:run
-```
-
-### 4. Acesse o frontend de visualização
-
-Abra o arquivo `web-data-viz/index.html` diretamente no navegador, ou sirva com um servidor local:
-
-```bash
-cd ../web-data-viz
-# Com Python (opcional)
-python3 -m http.server 8080
-```
-
-Acesse em: `http://localhost:8080`
-
----
-
 ## 📦 Módulos
 
 ### `codenexus-v2`
