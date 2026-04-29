@@ -121,5 +121,5 @@ Projeto desenvolvido pelos membros do **Grupo 3 — CodeNexus** como entregável
 ---
 
 <div align="center">
-  <sub>Desenvolvido com ❤️ pela startup <strong>CodeNexus — Grupo 3</strong></sub>
+  <sub>Desenvolvido pela startup <strong>CodeNexus</strong></sub>
 </div>
